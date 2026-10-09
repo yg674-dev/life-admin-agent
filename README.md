@@ -11,7 +11,7 @@ The clickable prototype with a **23-step guided walkthrough** — click *Guided 
 bottom left, or drive the UI yourself. *Ask Errand* at the bottom right is the always-on Q&A panel.
 
 **Prototype without the walkthrough:** [`index.html`](https://yg674-dev.github.io/life-admin-agent/)
-· **Journey map:** [`docs/journey-map.html`](https://yg674-dev.github.io/life-admin-agent/docs/journey-map.html)
+· **Journey map:** [life-admin-agent-map.vercel.app](https://life-admin-agent-map.vercel.app/)
 
 This README is the PRD. "Errand" is a working name. All data in the prototype is sample data, and
 filing is simulated.
@@ -161,6 +161,11 @@ flowchart LR
   G --> H["Pick first job"]
 ```
 
+- **Aha moment:** within 5 minutes the agent shows something the user didn't know — a renewal
+  coming up, a forgotten subscription, or last year's refund they could have increased.
+- **Permission tiers:** *Notify only* → *Prepare and ask* (default) → *Act within limits*, e.g.
+  "cancel subscriptions under $20 without asking."
+
 ### J1 · Move — change my address everywhere
 
 ```mermaid
@@ -179,6 +184,10 @@ flowchart LR
   E --> J["→ Payroll: state withholding"]
 ```
 
+- **Edge cases:** moving to another state (part-year resident returns), moving abroad, temporary
+  moves, two people moving together.
+- **Success:** % of accounts updated within 14 days; partner offers accepted.
+
 ### J2 · Renew — never miss an expiry
 
 ```mermaid
@@ -195,6 +204,10 @@ flowchart LR
   G --> H
 ```
 
+- **Lead times:** passport about 6 months (many countries require 6 months' validity), visa by
+  type, insurance 30 days so there is time to shop around.
+- **Success:** lapses prevented; insurance savings per renewal.
+
 ### J3 · Claim — get my money back
 
 ```mermaid
@@ -209,6 +222,8 @@ flowchart LR
   G -->|denied| I["Drafts appeal"]
   I --> E
 ```
+
+- **Revenue:** a share of what's recovered, or included in the subscription.
 
 ### J4 · Tax — a year-round copilot
 
@@ -245,6 +260,39 @@ flowchart TB
   Y --> Q --> F --> P
   P3 -.-> Y1
 ```
+
+Most strategies that save money have to happen **before** December 31 — the opposite of how
+filing software works today. That is why the journey runs all year.
+
+**The filing interview, step by step**
+
+```mermaid
+flowchart LR
+  A["Who are you this year?<br/>prefilled from vault"] --> B["Income<br/>W-2, 1099-NEC/INT/DIV/B,<br/>gig platforms"]
+  B --> C["Life changes<br/>from Move / Renew / Claim"]
+  C --> D["Deductions + credits<br/>agent tests every one"]
+  D --> E["Choose strategy<br/>side-by-side scenarios"]
+  E --> F["Accuracy check<br/>vs IRS transcript"]
+  F --> G["Plain-English summary<br/>what changed vs last year"]
+  G --> H["Sign + file"]
+```
+
+- **Free path:** if the user qualifies for IRS Free File or VITA, the agent says so up front.
+- **Success:** minutes to file; questions asked per return; $ saved through strategies, shown and
+  explained; users who come back next year.
+
+**Life events → tax impact.** Each event recorded in another module becomes a prompt in the tax
+file months before filing — the advantage of modules that feed each other.
+
+| Event (source) | What the agent flags for tax | When it's raised |
+| --- | --- | --- |
+| Moved states (Move) | Part-year resident returns in both states; which state taxes which income | Right after the move |
+| New job (email / payroll) | W-4 withholding across two jobs; old 401(k): roll over or leave | First payslip |
+| Started gig work (bank) | Quarterly estimated payments; track business expenses; SEP or Solo 401(k) | First 1099 platform deposit |
+| Baby / dependent (Renew) | Child tax credit, dependent care FSA, filing status, 529 | When the SSN card arrives |
+| Married | Joint vs. separate; update W-4s; name change with SSA before filing | Name-change step |
+| Medical claim (Claim) | Whether the medical deduction is worth it; HSA reimbursement records | When the claim is paid |
+| Sold stock / crypto (brokerage) | Short- vs. long-term gains; offset with losses; wash-sale rules | At sale, and in Q4 |
 
 ### Ask Errand · always-on Q&A
 
@@ -402,6 +450,27 @@ inside chat (*Do it for me* is P2).
 | **File** (Jan–Apr) | Free File / VITA eligibility check first. Documents auto-collected with sources and flags (e.g., 1099-B missing basis). Filing runs the form-fill engine with a live refund meter |
 | **After filing** | Refund tracking, IRS letter reader that drafts replies for approval, carry-forward to next year's plan |
 
+**Smart tax strategies the agent checks.** Legal planning only — the agent tests each against the
+user's data, shows the dollar effect, and leaves the decision to the user. Limits and credit rules
+change every year, so the agent reads current-year figures rather than hardcoded numbers.
+
+| Strategy | Who it helps | Agent's trigger | Deadline |
+| --- | --- | --- | --- |
+| Max 401(k) / 403(b) | Salaried with room under the limit | Payroll shows % below the match or the limit | Dec 31 (via payroll) |
+| IRA (Traditional vs. Roth) | Most earners | Income vs. deduction and Roth phase-outs | Filing deadline |
+| HSA contributions | People on a high-deductible health plan | Insurance doc shows an HDHP | Filing deadline |
+| Fix W-4 withholding | Big refund or big bill last year | Projection off by more than a set amount | Any time, earlier is better |
+| Quarterly estimates | Gig and self-employed | Untaxed 1099 income detected | Quarterly due dates |
+| Itemize vs. standard | Homeowners, big donors, high medical costs | Sum of 1098 + charity + medical + SALT | At filing |
+| Bunch donations / DAF | Givers near the itemizing line | Itemized total just below standard | Dec 31 |
+| Tax-loss harvesting | Taxable brokerage with losses | Unrealized losses + realized gains | Dec 31 |
+| Gain timing (0% bracket) | Low-income years, students, retirees | Projected income under the 0% capital-gains threshold | Dec 31 |
+| Credits sweep | Families, students, low-to-moderate income | EITC, Child Tax Credit, AOTC / LLC, Saver's Credit, dependent care | At filing |
+| Filing status test | Married, single parents | Joint vs. separate, Head of Household eligibility | At filing |
+| Self-employed deductions | Freelancers | Home office, mileage, health premiums, SEP / Solo 401(k) | Dec 31 / filing |
+| 529 state deduction | Parents in states that offer it | Child in household + state rules | Varies by state |
+| Amend past returns | Anyone who missed a credit | Last 3 years' returns reviewed against found data | 3-year window |
+
 **Learning from Intuit.** Kept: interview over forms, document import, a live refund meter, a final
 accuracy review, expert review on demand. Changed: year-round instead of seasonal; one clear price
 instead of upgrade prompts mid-flow; infer before asking; explain choices with scenarios; tax data
@@ -482,7 +551,7 @@ act, institution-specific forms with checks, and accountability for what is subm
 | [`demo/index.html`](https://yg674-dev.github.io/life-admin-agent/demo/) | **Live demo** — prototype + 23-step guided walkthrough |
 | [`index.html`](https://yg674-dev.github.io/life-admin-agent/) | The prototype on its own |
 | [`demo/build.py`](demo/build.py) | Generates `demo/index.html` by injecting the walkthrough layer into the untouched prototype |
-| [`docs/journey-map.html`](https://yg674-dev.github.io/life-admin-agent/docs/journey-map.html) | Journey map: all journeys, life events → tax, Intuit lessons, strategy table |
+| [Journey map](https://life-admin-agent-map.vercel.app/) · [`docs/journey-map.html`](https://yg674-dev.github.io/life-admin-agent/docs/journey-map.html) | Journey map: all journeys, life events → tax, Intuit lessons, strategy table (the Vercel deployment and the in-repo copy are the same page) |
 | `docs/screens/` | Per-feature screenshots used above |
 
 ```bash
