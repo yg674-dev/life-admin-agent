@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life Admin Agent Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a filed-paperwork document. Left index rail on wide screens, one reading column, form-line labels in mono. */
+:root{
+  --bg:#f6f7f5; --surface:#ffffff; --ink:#18211f; --muted:#5b6662; --line:#dfe3df;
+  --accent:#0f6b5c; --accent-soft:#e3f0ec; --stamp:#b5541c; --stamp-soft:#f7e9df;
+  --display:"Familjen Grotesk","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121816; --surface:#19211e; --ink:#e6ece9; --muted:#9aa8a3; --line:#2b3632;
+  --accent:#5cc2ad; --accent-soft:#1d332d; --stamp:#e89160; --stamp-soft:#3a2619; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121816; --surface:#19211e; --ink:#e6ece9; --muted:#9aa8a3; --line:#2b3632;
+  --accent:#5cc2ad; --accent-soft:#1d332d; --stamp:#e89160; --stamp-soft:#3a2619; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:40px 80px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr);gap:24px}nav.toc{display:none}}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;display:flex;flex-direction:column;gap:6px;font-size:13px}
+nav.toc a{color:var(--muted);text-decoration:none;padding:3px 0 3px 10px;border-left:2px solid var(--line)}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--accent);border-left-color:var(--accent);outline:none}
+nav.toc .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+main{min-width:0;display:flex;flex-direction:column;gap:56px}
+header{display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--line);padding-bottom:28px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--stamp)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,5vw,48px);line-height:1.05;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.15;margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:500;font-size:19px;margin:0}
+p{margin:0;max-width:68ch}
+section{display:flex;flex-direction:column;gap:18px;scroll-margin-top:24px}
+.lede{font-size:17px;color:var(--muted);max-width:64ch}
+.form-line{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+ul.tight{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.goal{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.goal div{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.goal b{font-family:var(--display);font-size:17px}
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;overflow-x:auto}
+.diagram pre.mermaid{margin:0;background:none;display:flex;justify-content:center}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.chip.kyc{background:var(--stamp-soft);color:var(--stamp);border-color:transparent}
+.chip.agent{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.chip.user{background:var(--surface)}
+.journey{display:flex;flex-direction:column;gap:14px;padding-top:8px;border-top:1px dashed var(--line)}
+.journey .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px}
+.kv{display:grid;grid-template-columns:140px minmax(0,1fr);gap:6px 16px;font-size:14.5px;max-width:80ch}
+.kv dt{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding-top:3px}
+.kv dd{margin:0}
+@media (max-width:520px){.kv{grid-template-columns:minmax(0,1fr)}.kv dd{margin-bottom:8px}}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--bg)}
+tr:last-child td{border-bottom:none}
+td.k{font-weight:600;white-space:nowrap}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.panel.copy h3{color:var(--accent)} .panel.fix h3{color:var(--stamp)}
+.note{background:var(--stamp-soft);border-radius:6px;padding:14px 16px;font-size:14px;max-width:80ch}
+.note b{color:var(--stamp)}
+ol.q{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;max-width:72ch}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="Sections">
+  <span class="lbl">Index</span>
+  <a href="#goal">Business goal</a>
+  <a href="#loop">How the agent works</a>
+  <a href="#journeys">User journeys</a>
+  <a href="#j-onboard">· Onboarding</a>
+  <a href="#j-move">· Move</a>
+  <a href="#j-renew">· Renew</a>
+  <a href="#j-claim">· Claim</a>
+  <a href="#j-tax">· Tax</a>
+  <a href="#signals">Life events → tax</a>
+  <a href="#intuit">Learning from Intuit</a>
+  <a href="#strategies">Smart tax strategies</a>
+  <a href="#guardrails">Guardrails</a>
+  <a href="#open">Open questions</a>
+</nav>
+
+<main>
+<header>
+  <span class="eyebrow">Product studio · journey map · draft v0.1</span>
+  <h1>Life Admin Agent</h1>
+  <p class="lede">One personal agent, built on verified identity, that handles the paperwork in people's lives: moving, renewals, claims and taxes. Taxes are year-round planning, not a once-a-year form.</p>
+</header>
+
+<section id="goal">
+  <h2>Business goal</h2>
+  <p>Become the one place a person goes when life creates paperwork. KYC is what makes this possible. It lets the agent act on the user's behalf, not just remind them. Taxes are the anchor: every person has to file each year, and every other module feeds the tax return with data.</p>
+  <div class="goal">
+    <div><span class="form-line">Wedge</span><b>Move</b><span>Clear, one-off job. Partners pay referral fees. Builds the user's account map.</span></div>
+    <div><span class="form-line">Retention</span><b>Renew + Tax</b><span>Recurring reasons to come back: renewals any time of year, and filing every spring.</span></div>
+    <div><span class="form-line">Moat</span><b>Life context</b><span>The agent already knows about the move, the baby and the claim before tax season, which TurboTax never does.</span></div>
+  </div>
+</section>
+
+<section id="loop">
+  <h2>How the agent works</h2>
+  <p>Every module runs the same loop. A trigger, whether a life event, a deadline or a document, starts a plan. Each step is sorted by who can do it, and the user approves anything that commits them.</p>
+  <div class="legend"><span class="chip kyc">KYC-gated</span><span class="chip agent">Agent does it</span><span class="chip user">User does it</span></div>
+  <div class="diagram"><pre class="mermaid">
+flowchart LR
+  T["Trigger<br/>life event · deadline · new doc"] --> C["Agent reads context<br/>vault + account map"]
+  C --> P["Builds a plan<br/>steps + deadlines"]
+  P --> S{"Who can do<br/>each step?"}
+  S -->|API / form fill| A["Agent executes"]
+  S -->|needs signature| E["Pre-filled e-sign<br/>user taps approve"]
+  S -->|in person / unsupported| U["Guided task<br/>for the user"]
+  S -->|automation fails| H["Human operator<br/>finishes it"]
+  A --> R["Tracker + receipts<br/>saved to vault"]
+  E --> R
+  U --> R
+  H --> R
+  R --> L["Learns: updates<br/>account map + tax file"]
+  L -.-> T
+  classDef kyc fill:#f7e9df,stroke:#b5541c,color:#18211f
+  classDef agent fill:#e3f0ec,stroke:#0f6b5c,color:#18211f
+  class A,R,L,C agent
+  class E kyc
+  </pre></div>
+</section>
+
+<section id="journeys">
+  <h2>User journeys</h2>
+  <p>Five journeys. Onboarding happens once, and each of the four modules can be entered on its own or triggered by another one.</p>
+
+  <div class="journey" id="j-onboard">
+    <div class="head"><span class="form-line">J0</span><h3>Onboarding and verification</h3><span class="chip kyc">KYC</span></div>
+    <div class="diagram"><pre class="mermaid">
+flowchart LR
+  A["Lands from<br/>moving / tax / renewal hook"] --> B["Sign up"]
+  B --> C["KYC: ID scan +<br/>selfie liveness"]
+  C -->|pass| D["Set permissions<br/>what the agent may do alone"]
+  C -->|fail| C2["Manual review<br/>or retry"]
+  C2 --> D
+  D --> E["Connect sources<br/>email · bank · payroll · IRS account"]
+  E --> F["Agent builds life map<br/>accounts · IDs · policies · dates"]
+  F --> G["First 'found for you' moment<br/>e.g. passport expires in 5 mo"]
+  G --> H["Pick first job"]
+  classDef kyc fill:#f7e9df,stroke:#b5541c,color:#18211f
+  class C,C2,D kyc
+    </pre></div>
+    <dl class="kv">
+      <dt>Aha moment</dt><dd>Within 5 minutes the agent shows something the user didn't know: a renewal coming up, a subscription they forgot, or last year's refund they could have increased.</dd>
+      <dt>Permission tiers</dt><dd><b>Notify only</b> → <b>Prepare and ask</b> (default) → <b>Act within limits</b>, for example "cancel subscriptions under $20 without asking."</dd>
+    </dl>
+  </div>
+
+  <div class="journey" id="j-move">
+    <div class="head"><span class="form-line">J1</span><h3>Move: change my address everywhere</h3><span class="chip agent">Wedge</span></div>
+    <div class="diagram"><pre class="mermaid">
+flowchart LR
+  A["'I'm moving'<br/>new address + date"] --> B["Scan email + bank<br/>for every account with old address"]
+  B --> C["Checklist sorted by<br/>agent / e-sign / in person"]
+  C --> D1["Agent: banks, cards,<br/>subscriptions, employer"]
+  C --> D2["E-sign: USPS forwarding,<br/>insurance, voter reg"]
+  C --> D3["Guided: DMV license<br/>and registration"]
+  C --> D4["Offers: utilities, internet,<br/>renters insurance"]
+  D1 --> E["Tracker until all done"]
+  D2 --> E
+  D3 --> E
+  D4 --> E
+  E --> F["Handoff to Tax:<br/>state change · moving dates"]
+  E --> G["Handoff to Renew:<br/>new registration dates"]
+  classDef agent fill:#e3f0ec,stroke:#0f6b5c,color:#18211f
+  classDef kyc fill:#f7e9df,stroke:#b5541c,color:#18211f
+  class D1,B agent
+  class D2 kyc
+    </pre></div>
+    <dl class="kv">
+      <dt>Edge cases</dt><dd>Moving to another state, where the agent warns about part-year resident returns. Moving abroad. Temporary moves. Two people moving together.</dd>
+      <dt>Success</dt><dd>% of accounts updated within 14 days. Partner offers accepted.</dd>
+    </dl>
+  </div>
+
+  <div class="journey" id="j-renew">
+    <div class="head"><span class="form-line">J2</span><h3>Renew: never miss an expiry</h3><span class="chip agent">Always on</span></div>
+    <div class="diagram"><pre class="mermaid">
+flowchart LR
+  A["Vault scan:<br/>passport, license, visa,<br/>car reg, insurance, leases"] --> B["Expiry calendar"]
+  B --> C{"Due in<br/>lead time?"}
+  C -->|no| B
+  C -->|yes| D["Agent prepares renewal<br/>pre-filled forms + photos"]
+  D --> E{"Can it be<br/>submitted online?"}
+  E -->|yes| F["User approves → agent submits"]
+  E -->|no| G["Book appointment +<br/>packet of documents"]
+  F --> H["Track status → new doc<br/>saved to vault"]
+  G --> H
+  D --> I["Compare quotes for<br/>insurance renewals"]
+  I --> F
+  classDef kyc fill:#f7e9df,stroke:#b5541c,color:#18211f
+  class F kyc
+    </pre></div>
+    <dl class="kv">
+      <dt>Lead times</dt><dd>Passport: about 6 months, since many countries require 6 months of validity. Visa: depends on the type. Insurance: 30 days, so there's time to shop around.</dd>
+      <dt>Success</dt><dd>Lapses prevented. Insurance savings per renewal.</dd>
+    </dl>
+  </div>
+
+  <div class="journey" id="j-claim">
+    <div class="head"><span class="form-line">J3</span><h3>Claim: get my money back</h3><span class="chip agent">Money in</span></div>
+    <div class="diagram"><pre class="mermaid">
+flowchart LR
+  A["Trigger: medical bill,<br/>delayed flight, damaged item,<br/>FSA receipt, unclaimed property"] --> B["Agent checks eligibility<br/>policy terms + deadlines"]
+  B --> C["Gathers evidence<br/>receipts, photos, emails"]
+  C --> D["Drafts claim"]
+  D --> E["User approves + signs"]
+  E --> F["Agent files + follows up"]
+  F --> G{"Outcome"}
+  G -->|paid| H["Logged → tax file<br/>e.g. HSA, casualty"]
+  G -->|denied| I["Drafts appeal"]
+  I --> F
+  classDef kyc fill:#f7e9df,stroke:#b5541c,color:#18211f
+  class E kyc
+    </pre></div>
+    <dl class="kv">
+      <dt>Revenue</dt><dd>A share of what's recovered, or included in the subscription.</dd>
+    </dl>
+  </div>
+
+
+  <div class="journey" id="j-tax">
+    <div class="head"><span class="form-line">J4</span><h3>Tax: a year-round copilot</h3><span class="chip agent">Anchor</span><span class="chip kyc">IRS / state identity</span></div>
+    <p>The key change from TurboTax is that the journey runs all year. Most strategies that save money have to happen <i>before</i> December 31, which is the opposite of how filing software works today.</p>
+    <div class="diagram"><pre class="mermaid">
+flowchart TB
+  subgraph Y["All year: plan"]
+    direction LR
+    Y1["Agent keeps a running<br/>tax picture from bank,<br/>payroll, brokerage"] --> Y2["Life event from other<br/>modules updates it"]
+    Y2 --> Y3["Projected refund / bill<br/>updated monthly"]
+    Y3 --> Y4["Nudges: raise 401k, fund HSA,<br/>fix W-4, pay quarterly estimate"]
+  end
+  subgraph Q["Q4: last chance"]
+    direction LR
+    Q1["Year-end checklist"] --> Q2["Harvest losses, bunch<br/>donations, max accounts"]
+  end
+  subgraph F["Jan to Apr: file"]
+    direction LR
+    F1["Docs arrive: W-2, 1099s,<br/>1098 → auto-collected"] --> F2["Interview only asks<br/>what it can't infer"]
+    F2 --> F3["Strategy review:<br/>status, credits, itemize vs standard"]
+    F3 --> F4{"Complexity<br/>check"}
+    F4 -->|simple| F5["User reviews in plain<br/>language → e-signs"]
+    F4 -->|complex| F6["CPA / EA reviews<br/>then user signs"]
+    F5 --> F7["E-file via authorized<br/>provider"]
+    F6 --> F7
+  end
+  subgraph P["After filing"]
+    direction LR
+    P1["Track refund"] --> P2["IRS letter? Agent<br/>reads + drafts reply"]
+    P2 --> P3["Carry forward:<br/>next year's plan"]
+  end
+  Y --> Q --> F --> P
+  P3 -.-> Y1
+  classDef kyc fill:#f7e9df,stroke:#b5541c,color:#18211f
+  classDef agent fill:#e3f0ec,stroke:#0f6b5c,color:#18211f
+  class F5,F6 kyc
+  class Y1,F1,F3 agent
+    </pre></div>
+
+    <h3 style="margin-top:8px">The filing interview, step by step</h3>
+    <div class="diagram"><pre class="mermaid">
+flowchart LR
+  A["Who are you this year?<br/>prefilled from vault"] --> B["Income<br/>W-2, 1099-NEC/INT/DIV/B,<br/>gig platforms"]
+  B --> C["Life changes<br/>pulled from Move / Renew / Claim"]
+  C --> D["Deductions + credits<br/>agent tests every one"]
+  D --> E["Choose strategy<br/>side-by-side scenarios"]
+  E --> F["Accuracy check<br/>mismatches vs IRS transcript"]
+  F --> G["Plain-English summary<br/>what changed vs last year, and why"]
+  G --> H["Sign + file"]
+    </pre></div>
+    <dl class="kv">
+      <dt>Free path</dt><dd>If the user qualifies for IRS Free File or free local help (VITA), the agent says so up front. Being honest here builds the trust the paid product depends on.</dd>
+      <dt>Success</dt><dd>Minutes to file. Questions asked per return. $ saved through strategies, shown and explained. Users who come back next year.</dd>
+    </dl>
+  </div>
+</section>
+
+<section id="signals">
+  <h2>Life events → tax impact</h2>
+  <p>This is the advantage of having modules that feed each other. Each event recorded in another module becomes a prompt in the tax file, months before filing.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Event (source module)</th><th>What the agent flags for tax</th><th>When it's raised</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Moved states (Move)</td><td>Part-year resident returns in both states. Check which state taxes which income.</td><td>Right after the move</td></tr>
+      <tr><td class="k">New job (email/payroll)</td><td>Check W-4 withholding across two jobs. Decide on the old 401(k): roll it over or leave it.</td><td>First payslip</td></tr>
+      <tr><td class="k">Started gig work (bank)</td><td>Quarterly estimated payments. Track business expenses. Consider a SEP or Solo 401(k).</td><td>First 1099 platform deposit</td></tr>
+      <tr><td class="k">Baby / dependent (Renew)</td><td>Child tax credit, dependent care FSA, change filing status, open a 529.</td><td>When the SSN card arrives</td></tr>
+      <tr><td class="k">Married</td><td>Compare filing jointly vs separately. Update W-4s. Name change with SSA before filing.</td><td>Name-change step</td></tr>
+      <tr><td class="k">Medical claim (Claim)</td><td>Is the medical deduction worth it? HSA reimbursement records.</td><td>When the claim is paid</td></tr>
+      <tr><td class="k">Sold stock / crypto (brokerage)</td><td>Short- vs long-term gains. Offset with losses. Watch wash-sale rules.</td><td>At sale, and in Q4</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="intuit">
+  <h2>Learning from Intuit</h2>
+  <p>TurboTax shows that people will pay to avoid tax forms. Its weak spots are trust and timing, and those are where this product can be better.</p>
+  <div class="two">
+    <div class="panel copy">
+      <h3>Copy</h3>
+      <ul class="tight">
+        <li><b>Interview, not forms.</b> Plain questions that become form lines without the user seeing them.</li>
+        <li><b>Imports.</b> Photo of the W-2, employer and brokerage imports, last year's data carried forward.</li>
+        <li><b>Live refund meter.</b> The number updates as you answer, which keeps people going.</li>
+        <li><b>Final accuracy review</b> before filing, plus audit support.</li>
+        <li><b>Experts on demand.</b> A CPA or EA can review or take over (TurboTax Live).</li>
+      </ul>
+    </div>
+    <div class="panel fix">
+      <h3>Do differently</h3>
+      <ul class="tight">
+        <li><b>Seasonal → year-round.</b> TurboTax shows up after the year has closed, when most strategies can no longer be used.</li>
+        <li><b>Upsell maze → one clear price.</b> Intuit paid a $141M multistate settlement in 2022 over how it advertised "free." Don't price by form complexity or upgrade people mid-flow.</li>
+        <li><b>Asks everything → infers first.</b> Life context from other modules means fewer questions.</li>
+        <li><b>Finds deductions → explains choices.</b> Show scenarios and why, so the user learns and decides.</li>
+        <li><b>Data for marketing → data for you.</b> Tax data never goes to cross-sell partners.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="strategies">
+  <h2>Smart tax strategies the agent checks</h2>
+  <p>All of these are legal planning, not aggressive positions. The agent tests each one against the user's data, shows the dollar effect, and leaves the decision to the user. Contribution limits and credit rules change every year, so the agent reads the current year's figures and never relies on hardcoded numbers.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Strategy</th><th>Who it helps</th><th>Agent's trigger</th><th>Deadline</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Max 401(k) / 403(b)</td><td>Salaried with room under the limit</td><td>Payroll shows % below the match or the limit</td><td>Dec 31 (via payroll)</td></tr>
+      <tr><td class="k">IRA (Traditional vs Roth)</td><td>Most earners</td><td>Income vs deduction and Roth phase-outs</td><td>Filing deadline</td></tr>
+      <tr><td class="k">HSA contributions</td><td>People on a high-deductible health plan</td><td>Insurance doc shows an HDHP</td><td>Filing deadline</td></tr>
+      <tr><td class="k">Fix W-4 withholding</td><td>Big refund or big bill last year</td><td>Projection is off by more than a set amount</td><td>Any time, earlier is better</td></tr>
+      <tr><td class="k">Quarterly estimates</td><td>Gig and self-employed</td><td>Untaxed 1099 income detected</td><td>Quarterly due dates</td></tr>
+      <tr><td class="k">Itemize vs standard</td><td>Homeowners, big donors, high medical costs</td><td>Sum of 1098 + charity + medical + SALT</td><td>At filing</td></tr>
+      <tr><td class="k">Bunch donations / DAF</td><td>Givers near the itemizing line</td><td>Itemized total just below standard</td><td>Dec 31</td></tr>
+      <tr><td class="k">Tax-loss harvesting</td><td>Taxable brokerage with losses</td><td>Unrealized losses + realized gains</td><td>Dec 31</td></tr>
+      <tr><td class="k">Gain timing (0% bracket)</td><td>Low-income years, students, retirees</td><td>Projected income under the 0% capital gains threshold</td><td>Dec 31</td></tr>
+      <tr><td class="k">Credits sweep</td><td>Families, students, low-to-moderate income</td><td>EITC, Child Tax Credit, AOTC / LLC, Saver's Credit, dependent care</td><td>At filing</td></tr>
+      <tr><td class="k">Filing status test</td><td>Married, single parents</td><td>Joint vs separate, Head of Household eligibility</td><td>At filing</td></tr>
+      <tr><td class="k">Self-employed deductions</td><td>Freelancers</td><td>Home office, mileage, health premiums, SEP / Solo 401(k)</td><td>Dec 31 / filing</td></tr>
+      <tr><td class="k">529 state deduction</td><td>Parents in states that offer it</td><td>Child in household + state rules</td><td>Varies by state</td></tr>
+      <tr><td class="k">Amend past returns</td><td>Anyone who missed a credit</td><td>Last 3 years' returns reviewed against found data</td><td>3-year window</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="guardrails">
+  <h2>Guardrails and compliance</h2>
+  <ul class="tight">
+    <li><b>E-filing.</b> Filing returns electronically requires IRS authorized e-file provider status (EFIN), or a partnership with a provider that has it. This affects the build plan.</li>
+    <li><b>Paid preparers.</b> If you charge to prepare returns, the CPAs or EAs who review them need PTINs and must follow preparer rules. Decide early whether the product is software the user files themselves, or a preparation service.</li>
+    <li><b>The user always signs.</b> The agent never files, pays or commits money without explicit approval for that specific action.</li>
+    <li><b>Explain, then recommend.</b> Every strategy shows its source rule, the dollar effect and the risk level. No positions that are unlikely to hold up in an audit.</li>
+    <li><b>Data.</b> Tax data is used only for tax preparation unless the user consents (the IRC §7216 consent rules). Encryption, a SOC 2 audit and short retention for ID images.</li>
+    <li><b>Human fallback.</b> Every journey has a person who can take over when automation or the user gets stuck.</li>
+  </ul>
+  <p class="note"><b>Check before building:</b> e-file rules, preparer requirements and state data laws vary. Have a tax attorney review the product before the pilot.</p>
+</section>
+
+<section id="open">
+  <h2>Open questions</h2>
+  <ol class="q">
+    <li>Market: US first? China or the EU would change the tax engine and the government integrations entirely.</li>
+    <li>Build vs partner on e-file and the tax calculation engine?</li>
+    <li>Pricing: one subscription covering all modules, or a free agent with a paid filing tier?</li>
+    <li>Does KYC from your existing system satisfy IRS identity requirements, or do users still verify with the IRS separately?</li>
+    <li>Which module ships first: Move as the wedge, or Tax timed to the next filing season?</li>
+  </ol>
+</section>
+</main>
+</div>
+
+<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"neutral"});</script>
+</body>
+</html>
