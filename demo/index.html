@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Errand · Life Admin Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap">
 <style>
 :root{
   --bg:#FFFFFF; --bg-soft:#F9FAFB; --bg-hover:#F3F4F6; --page:#F6F7F9;
@@ -303,18 +306,156 @@ tr:last-child td{border-bottom:0}
 .toast span{color:#9CA3AF}
 @keyframes tin{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition:none!important}}
+
+/* ============ Friendly theme ============
+   Warm cream ground, honey-yellow brand, rounded Nunito type, pastel module
+   colors, pill controls and soft "sticker" cards. Overrides the base console
+   styles above; IDs and behaviour are unchanged. */
+:root{
+  --page:#FFFBF1; --bg:#FFFFFF; --bg-soft:#FFF8E7; --bg-hover:#FFF1CC;
+  --border:#F0E6CF; --border-strong:#E4D5B3;
+  --text-1:#2B2118; --text-2:#4A3F35; --text-3:#7D7064; --text-4:#ADA294;
+  --primary:#6D5DF6; --primary-hover:#5847E8; --primary-light:#F0EDFF;
+  --honey:#FFD21E; --honey-deep:#F5B700; --honey-light:#FFF4C2;
+  --success:#22C55E; --success-light:#DCFCE7; --warn:#F59E0B; --warn-light:#FFF1CC;
+  --danger:#F43F5E; --danger-light:#FFE4EA; --violet:#8B5CF6; --violet-light:#F1EBFF;
+  --move:#E0F2FE; --move-ink:#0369A1; --renew:#F1EBFF; --renew-ink:#6D28D9;
+  --claim:#DCFCE7; --claim-ink:#15803D; --tax:#FFEDD5; --tax-ink:#C2410C;
+  --radius:12px; --radius-lg:20px;
+  --shadow-sm:0 1px 0 rgba(120,90,30,.06); --shadow-md:0 6px 18px rgba(120,90,30,.08); --shadow-lg:0 18px 40px rgba(80,60,20,.16);
+}
+body{font-family:"Nunito Sans","Nunito",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14.5px;color:var(--text-2);
+  background:radial-gradient(1200px 400px at 85% -120px,#FFF0B8 0,transparent 60%),var(--page)}
+.page-title,.card-t,.brand,.ae-title,.qa-head-title,.stat .v,.proj .big,.meter .v,.found .t,.tab,.btn,.sec-t,.c-t{font-family:"Nunito",-apple-system,sans-serif}
+.topbar{background:rgba(255,251,241,.86);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--border);height:64px}
+.brand{font-weight:900;font-size:19px;display:flex;align-items:center;gap:8px;letter-spacing:-.01em}
+.brand .logo{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:var(--honey);box-shadow:0 3px 0 var(--honey-deep);font-size:20px;transform:rotate(-6deg)}
+.brand-sub{font-family:"Nunito Sans",sans-serif;font-weight:600;font-size:12.5px;margin-left:2px}
+.tabs{gap:6px}
+.tab{border-radius:999px;padding:8px 14px;font-weight:800;font-size:13.5px;color:var(--text-3);display:inline-flex;align-items:center;gap:6px}
+.tab .k{display:none}
+.tab .ti{font-size:15px;line-height:1}
+.tab:hover{background:var(--bg-hover);color:var(--text-1)}
+.tab.active{background:var(--text-1);color:#fff}
+.sample{border-color:var(--border-strong);background:#fff}
+.avatar{background:var(--renew);color:var(--renew-ink);width:32px;height:32px;font-family:"Nunito",sans-serif;font-weight:900}
+.page{padding-top:32px}
+.page-title{font-size:28px;font-weight:900;letter-spacing:-.02em}
+.page-sub{font-size:14px}
+.wave{display:inline-block;transform-origin:70% 70%;animation:wave 2.4s ease-in-out 1}
+@keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(14deg)}20%,40%{transform:rotate(-8deg)}}
+.card{border:1.5px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:18px 20px}
+.card-t{font-weight:800;font-size:15.5px}
+.sec-t{font-size:12px;font-weight:900;letter-spacing:.06em;color:var(--text-3)}
+.btn{border-radius:999px;border-width:1.5px;font-weight:800;padding:8px 16px;box-shadow:0 2px 0 var(--border)}
+.btn:hover{background:var(--bg-soft);transform:translateY(-1px)}
+.btn:active{transform:translateY(1px);box-shadow:none}
+.btn-sm{padding:6px 13px;font-size:12.5px}
+.btn-primary{background:var(--primary);border-color:var(--primary);box-shadow:0 3px 0 #4A3BC9;color:#fff}
+.btn-primary:hover{background:var(--primary-hover);border-color:var(--primary-hover)}
+.btn-ghost{box-shadow:none}
+.btn[disabled]{box-shadow:none}
+.pill{font-weight:800;padding:3px 10px;font-size:11.5px}
+.pill.info{background:var(--primary-light);color:var(--primary)}
+.pill.vio{background:var(--violet-light)}
+.src{border-radius:999px;padding:1px 8px;font-weight:800}
+.guard{border-radius:14px;background:#FFF8E1;border:1.5px dashed #F5C451;padding:10px 12px}
+.guard b::before{content:"✋ "}
+/* home */
+.kyc-badge{border-radius:14px;background:var(--claim);color:var(--claim-ink);font-family:"Nunito",sans-serif;font-weight:800}
+.kyc-badge .ic{background:var(--claim-ink)}
+.perm-opt{border-radius:14px;border-width:1.5px;padding:11px 12px}
+.perm-opt.on{background:var(--primary-light);border-color:var(--primary)}
+.found{border:0;box-shadow:0 2px 0 rgba(0,0,0,.04);transition:transform .18s}
+.found:hover{transform:translateY(-3px) rotate(-.4deg)}
+#found-grid .found:nth-child(1){background:var(--move)} #found-grid .found:nth-child(2){background:var(--renew)}
+#found-grid .found:nth-child(3){background:var(--claim)} #found-grid .found:nth-child(4){background:var(--tax)}
+.found .emo{font-size:30px;line-height:1;width:52px;height:52px;display:grid;place-items:center;background:#fff;border-radius:16px;box-shadow:0 3px 0 rgba(0,0,0,.06)}
+.found .t{font-size:16px;font-weight:900}
+.found .d{color:var(--text-2)}
+.found .btn{background:#fff;border-color:transparent;align-self:flex-start}
+.m-move{color:var(--move-ink)} .m-renew{color:var(--renew-ink)} .m-claim{color:var(--claim-ink)} .m-tax{color:var(--tax-ink)}
+.tbl{border:1.5px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-md)}
+th{background:var(--bg-soft);font-family:"Nunito",sans-serif;font-weight:900;color:var(--text-3)}
+td b{font-family:"Nunito",sans-serif}
+.bar{height:8px;border-radius:999px;background:#F5ECD6}
+.bar i{border-radius:999px;background:linear-gradient(90deg,var(--honey),#FFB020)}
+.stat .v{font-weight:900;font-size:28px}
+/* move / renew / tax */
+.grp-who .sw{width:12px;height:12px;border-radius:50%}
+.row{border-bottom:1.5px dashed var(--border)}
+.handoff div{border-radius:14px;border:1.5px solid var(--border);border-left:5px solid var(--violet)}
+.quote{border-radius:16px;border-width:1.5px}
+.quote.best{background:var(--claim);border-color:#86EFAC}
+.phases{border-radius:999px;border:1.5px solid var(--border);padding:5px;gap:4px;box-shadow:var(--shadow-md)}
+.phase{border:0;border-radius:999px;padding:9px 16px;background:transparent}
+.phase.active{background:var(--text-1);box-shadow:none}
+.phase.active b{color:#fff} .phase.active span{color:#E7DCCB}
+.phase .now{background:var(--honey);color:var(--text-1);border-radius:999px;padding:1px 7px}
+@media(max-width:760px){.phases{border-radius:20px;flex-wrap:wrap}.phase{flex:1 1 45%}}
+.owe{color:#E11D48} .refund{color:#16A34A}
+.months i{background:#FDA4AF;border-radius:8px 8px 3px 3px}
+.strat{border-bottom:1.5px dashed var(--border);padding:14px 4px}
+.strat.acc{background:linear-gradient(90deg,var(--claim),transparent);border-radius:14px}
+.track div.on::before{background:var(--success)}
+/* modals */
+.modal-overlay{background:rgba(43,33,24,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.ae-window,.kyc-window{border-radius:26px;border:1.5px solid var(--border)}
+.ae-head,.ae-foot{background:var(--bg-soft)}
+.ae-title{font-weight:900;font-size:17px}
+.qa-bee{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:12px;background:var(--honey);box-shadow:0 3px 0 var(--honey-deep);font-size:18px;flex:none}
+.qa-bee.sm{width:28px;height:28px;font-size:15px;border-radius:10px}
+.ae-task-chip{background:var(--honey-light);border-color:#F5D96B;color:#7A5B00}
+.ae-step .n{width:24px;height:24px}
+.ae-chat{background:#FFFDF8}
+.ae-msg{font-size:13px;border-radius:18px}
+.ae-msg.user{border-radius:18px 18px 6px 18px;background:var(--primary)}
+.ae-msg.agent{border-radius:18px 18px 18px 6px;border:1.5px solid var(--border);position:relative;margin-left:30px;max-width:calc(92% - 30px)}
+.ae-msg.agent::before{content:"🐝";position:absolute;left:-32px;bottom:0;width:26px;height:26px;border-radius:50%;background:var(--honey);display:grid;place-items:center;font-size:13px}
+.ae-msg.sys{border-radius:999px;background:var(--bg-soft);border-color:var(--border-strong)}
+.typing{border-radius:18px 18px 18px 6px;margin-left:30px}
+.ae-input-row textarea,.qa-input{border-radius:16px;border-width:1.5px}
+.meter{border-radius:16px;background:linear-gradient(135deg,var(--honey-light),#fff);border:1.5px solid #F5D96B}
+.prop-progress .bar i{background:linear-gradient(90deg,var(--honey),var(--primary))}
+.prop-section{border-radius:14px;border-width:1.5px}
+.prop-section-hd{font-family:"Nunito",sans-serif;font-weight:900}
+.prop-row.flash{animation:flashbg 1.6s ease-out}
+@keyframes flashbg{0%{background:var(--honey-light)}100%{background:transparent}}
+.prop-locked,.eval-box,.eval-fix,.ae-success{border-radius:14px}
+.ae-success b::before{content:"🎉 "}
+.kyc-visual{border-radius:18px}
+/* Ask Errand */
+.fab{background:var(--honey);color:var(--text-1);font-family:"Nunito",sans-serif;font-weight:900;font-size:14px;padding:11px 20px 11px 12px;box-shadow:0 4px 0 var(--honey-deep),var(--shadow-lg)}
+.fab:hover{background:#FFDA45;transform:translateY(-2px)}
+.fab-bee{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;font-size:16px}
+.qa-panel{border-radius:24px;border:1.5px solid var(--border)}
+.qa-head{background:var(--bg-soft)}
+.qa-head-l{display:flex;gap:10px;align-items:center}
+.qa-head-title{font-weight:900;font-size:16px}
+.qa-mode > div.active{color:var(--text-1);border-bottom-color:var(--honey-deep)}
+.qa-suggest-card{border-radius:14px;border-width:1.5px;background:#fff;font-weight:600}
+.qa-suggest-card:hover{background:var(--honey-light);border-color:#F5D96B;color:var(--text-1)}
+.bubble.user{border-radius:18px 18px 6px 18px}
+.bubble.ai{border-radius:18px 18px 18px 6px;background:var(--bg-soft);border:1.5px solid var(--border)}
+.ans-card,.clarify-box,.qa-empty{border-radius:14px;border-width:1.5px}
+.ans-card:hover{border-color:var(--primary);transform:translateY(-1px)}
+.clarify-chip{border-radius:999px;border-width:1.5px;font-weight:700}
+.qa-guardrail{background:var(--bg-soft)}
+.toast{border-radius:16px;background:var(--text-1)}
+.ae-input-row,.qa-input-row{align-items:flex-end}
+.ae-input-row .btn,.qa-input-row .btn{align-self:flex-end}
 </style>
 </head>
 <body>
 
 <header class="topbar">
-  <div class="brand">Errand<span class="brand-sub">personal admin agent</span></div>
+  <div class="brand"><span class="logo" aria-hidden="true">🐝</span>Errand<span class="brand-sub">your busy bee for life admin</span></div>
   <nav class="tabs" id="tabs">
-    <button class="tab active" data-p="f1" onclick="switchPage('f1')"><span class="k">F1</span>Home</button>
-    <button class="tab" data-p="f2" onclick="switchPage('f2')"><span class="k">F2</span>Move</button>
-    <button class="tab" data-p="f3" onclick="switchPage('f3')"><span class="k">F3</span>Renew</button>
-    <button class="tab" data-p="f4" onclick="switchPage('f4')"><span class="k">F4</span>Claim</button>
-    <button class="tab" data-p="f5" onclick="switchPage('f5')"><span class="k">F5</span>Tax</button>
+    <button class="tab active" data-p="f1" onclick="switchPage('f1')"><span class="k">F1</span><span class="ti">🏠</span>Home</button>
+    <button class="tab" data-p="f2" onclick="switchPage('f2')"><span class="k">F2</span><span class="ti">📦</span>Move</button>
+    <button class="tab" data-p="f3" onclick="switchPage('f3')"><span class="k">F3</span><span class="ti">🪪</span>Renew</button>
+    <button class="tab" data-p="f4" onclick="switchPage('f4')"><span class="k">F4</span><span class="ti">💸</span>Claim</button>
+    <button class="tab" data-p="f5" onclick="switchPage('f5')"><span class="k">F5</span><span class="ti">🧾</span>Tax</button>
   </nav>
   <span class="sample">Sample data</span>
   <div class="who"><span class="avatar">MC</span><span class="nm">Maya Chen</span><span class="pill ok">✓ Verified</span></div>
@@ -323,7 +464,7 @@ tr:last-child td{border-bottom:0}
 <!-- ============ F1 HOME ============ -->
 <section class="page active" id="page-f1">
   <div class="page-header">
-    <div><div class="page-title">Good morning, Maya</div>
+    <div><div class="page-title">Good morning, Maya <span class="wave">👋</span></div>
       <div class="page-sub">Thursday, Oct 9, 2026 · <span id="home-count">4</span> things need you this week</div></div>
     <div style="display:flex;gap:8px"><button class="btn" onclick="kycOpen()">Replay onboarding</button><button class="btn btn-primary" id="home-ask" onclick="openQA()">Ask Errand</button></div>
   </div>
@@ -359,10 +500,10 @@ tr:last-child td{border-bottom:0}
 
   <div class="sec-t">Found for you</div>
   <div class="grid g4" id="found-grid">
-    <div class="card found"><span class="mod m-move">Move</span><span class="t">Moving Nov 15 → Denver, CO</span><span class="d">15 accounts still have your Austin address. 7 of them the agent can update today.</span><button class="btn btn-sm" onclick="switchPage('f2')">Open move plan</button></div>
-    <div class="card found"><span class="mod m-renew">Renew</span><span class="t">Passport expires Mar 2, 2027</span><span class="d">Many countries require 6 months' validity. Your Lisbon trip is in April.</span><button class="btn btn-sm" onclick="switchPage('f3')">See renewals</button></div>
-    <div class="card found"><span class="mod m-claim">Claim</span><span class="t">$412 flight refund unclaimed</span><span class="d">Flight AX 2231 was cancelled Sep 22 and you didn't travel. Plus 2 more claims worth $926.</span><button class="btn btn-sm" onclick="switchPage('f4')">See claims</button></div>
-    <div class="card found"><span class="mod m-tax">Tax</span><span class="t">You'd owe about $460 for 2026</span><span class="d">Freelance income has no withholding. 4 moves before Dec 31 could turn that into a refund.</span><button class="btn btn-sm" onclick="switchPage('f5')">See tax plan</button></div>
+    <div class="card found"><span class="emo" aria-hidden="true">📦</span><span class="mod m-move">Move</span><span class="t">Moving Nov 15 → Denver, CO</span><span class="d">15 accounts still have your Austin address. 7 of them the agent can update today.</span><button class="btn btn-sm" onclick="switchPage('f2')">Open move plan</button></div>
+    <div class="card found"><span class="emo" aria-hidden="true">🛂</span><span class="mod m-renew">Renew</span><span class="t">Passport expires Mar 2, 2027</span><span class="d">Many countries require 6 months' validity. Your Lisbon trip is in April.</span><button class="btn btn-sm" onclick="switchPage('f3')">See renewals</button></div>
+    <div class="card found"><span class="emo" aria-hidden="true">💸</span><span class="mod m-claim">Claim</span><span class="t">$412 flight refund unclaimed</span><span class="d">Flight AX 2231 was cancelled Sep 22 and you didn't travel. Plus 2 more claims worth $926.</span><button class="btn btn-sm" onclick="switchPage('f4')">See claims</button></div>
+    <div class="card found"><span class="emo" aria-hidden="true">🧾</span><span class="mod m-tax">Tax</span><span class="t">You'd owe about $460 for 2026</span><span class="d">Freelance income has no withholding. 4 moves before Dec 31 could turn that into a refund.</span><button class="btn btn-sm" onclick="switchPage('f5')">See tax plan</button></div>
   </div>
 
   <div class="sec-t">Active jobs</div>
@@ -375,8 +516,8 @@ tr:last-child td{border-bottom:0}
 <!-- ============ F2 MOVE ============ -->
 <section class="page" id="page-f2">
   <div class="page-header">
-    <div><div class="page-title">Move · Austin, TX → Denver, CO</div>
-      <div class="page-sub">Move date Nov 15, 2026 · plan built from 14 months of email and bank activity</div></div>
+    <div><div class="page-title">📦 Moving to Denver</div>
+      <div class="page-sub">Austin, TX → Denver, CO · Nov 15, 2026 · plan built from 14 months of email and bank activity</div></div>
     <span class="pill info" id="move-progress-pill">0 of 13 required done</span>
   </div>
   <div class="grid g5" id="move-summary">
@@ -398,7 +539,7 @@ tr:last-child td{border-bottom:0}
 <!-- ============ F3 RENEW ============ -->
 <section class="page" id="page-f3">
   <div class="page-header">
-    <div><div class="page-title">Renew · expiry calendar</div>
+    <div><div class="page-title">🪪 Renewals</div>
       <div class="page-sub">Read from your document vault · each document has its own lead time</div></div>
   </div>
   <div class="tbl" id="renew-list"><table>
@@ -411,7 +552,7 @@ tr:last-child td{border-bottom:0}
 <!-- ============ F4 CLAIM ============ -->
 <section class="page" id="page-f4">
   <div class="page-header">
-    <div><div class="page-title">Claim · money you're owed</div>
+    <div><div class="page-title">💸 Money you're owed</div>
       <div class="page-sub">Found in email, bank transactions and insurance documents</div></div>
   </div>
   <div class="grid g3" id="claim-summary">
@@ -428,7 +569,7 @@ tr:last-child td{border-bottom:0}
 <!-- ============ F5 TAX ============ -->
 <section class="page" id="page-f5">
   <div class="page-header">
-    <div><div class="page-title">Tax · 2026</div>
+    <div><div class="page-title">🧾 Taxes · 2026</div>
       <div class="page-sub">Year-round copilot · single filer · W-2 job plus freelance design · moving states in November</div></div>
   </div>
   <div class="phases" id="tax-phases">
@@ -511,7 +652,7 @@ tr:last-child td{border-bottom:0}
 <div class="modal-overlay" id="agent-modal">
   <div class="ae-window">
     <div class="ae-head">
-      <div><div class="ae-title"><span id="ae-title"></span><span class="ae-task-chip" id="ae-chip"></span></div><div class="ae-sub" id="ae-sub"></div></div>
+      <div><div class="ae-title"><span class="qa-bee sm" aria-hidden="true">🐝</span><span id="ae-title"></span><span class="ae-task-chip" id="ae-chip"></span></div><div class="ae-sub" id="ae-sub"></div></div>
       <button class="ae-x" onclick="aeClose()" aria-label="Close">×</button>
     </div>
     <div class="ae-steps">
@@ -554,11 +695,11 @@ tr:last-child td{border-bottom:0}
 
 
 <!-- ============ ASK AI ============ -->
-<button class="fab" id="fab" onclick="toggleQA()"><span class="fab-dot"></span>Ask Errand</button>
+<button class="fab" id="fab" onclick="toggleQA()"><span class="fab-bee" aria-hidden="true">🐝</span>Ask Errand</button>
 <div class="qa-panel" id="qa-panel" role="dialog" aria-label="Ask Errand">
   <div class="qa-head">
-    <div><div class="qa-head-title">Ask Errand</div>
-      <div class="qa-head-sub">Answers only from your vault and connected accounts · 41 accounts · 12 documents</div></div>
+    <div class="qa-head-l"><span class="qa-bee" aria-hidden="true">🐝</span><div><div class="qa-head-title">Ask Errand</div>
+      <div class="qa-head-sub">Answers only from your vault and connected accounts · 41 accounts · 12 documents</div></div></div>
     <button class="btn btn-sm" onclick="toggleQA()" aria-label="Close">×</button>
   </div>
   <div class="qa-mode"><div class="active">Ask about my admin</div><div>Do it for me <span class="tag-inline">P2</span></div></div>
@@ -1132,16 +1273,16 @@ protoReset();
 .page{padding-bottom:50vh}
 .c-mask{position:fixed;inset:0;z-index:600;display:none}
 .c-mask.on{display:block}
-.c-spot{position:fixed;border-radius:10px;border:2px solid var(--primary,#3B82F6);
+.c-spot{position:fixed;border-radius:22px;border:2px solid var(--primary,#3B82F6);
   box-shadow:0 0 0 9999px rgba(15,23,42,.58);transition:all .3s cubic-bezier(.4,0,.2,1);pointer-events:none}
 #coach{position:fixed;left:20px;bottom:20px;width:372px;max-width:calc(100vw - 40px);z-index:620;display:none;
-  flex-direction:column;background:#fff;border:1px solid var(--border,#E5E7EB);border-radius:12px;
+  flex-direction:column;background:#fff;border:1.5px solid var(--border,#E5E7EB);border-radius:22px;
   box-shadow:0 20px 50px rgba(0,0,0,.3);max-height:min(74vh,620px);font-size:13px}
 #coach.on{display:flex}
 #coach.min{width:auto}
 #coach.min .c-body,#coach.min .c-foot,#coach.min .c-prog{display:none}
 .c-head{display:flex;align-items:center;gap:9px;padding:11px 14px;border-bottom:1px solid var(--border,#E5E7EB)}
-.c-head .dot{width:7px;height:7px;border-radius:50%;background:var(--primary,#3B82F6)}
+.c-head .dot{width:9px;height:9px;border-radius:50%;background:var(--honey,#3B82F6)}
 .c-head b{font-size:12.5px;color:var(--text-1,#111827)}
 .c-head .sp{flex:1}
 .c-head .cnt{font-size:11px;color:var(--text-4,#9CA3AF);font-variant-numeric:tabular-nums}
@@ -1168,8 +1309,8 @@ protoReset();
 .c-dots i.g.on{background:#F59E0B}
 .c-busy{display:inline-block;width:9px;height:9px;border:2px solid var(--primary,#3B82F6);border-right-color:transparent;border-radius:50%;animation:spin .6s linear infinite;vertical-align:-1px;margin-right:5px}
 .demo-fab{position:fixed;left:20px;bottom:20px;z-index:590;display:inline-flex;align-items:center;gap:9px;padding:12px 20px 12px 16px;border:0;border-radius:26px;cursor:pointer;
-  font:inherit;font-size:13.5px;font-weight:650;color:#fff;background:var(--primary,#3B82F6);box-shadow:0 10px 28px rgba(59,130,246,.38),0 2px 6px rgba(16,24,40,.14);transition:transform .18s}
-.demo-fab:hover{background:var(--primary-hover,#2563EB);transform:translateY(-2px)}
+  font:inherit;font-size:13.5px;font-weight:650;color:#fff;background:var(--text-1,#3B82F6);box-shadow:0 4px 0 #000,0 10px 28px rgba(0,0,0,.25);font-family:Nunito,sans-serif;font-weight:900;transition:transform .18s}
+.demo-fab:hover{background:#000;transform:translateY(-2px)}
 .demo-fab .tri{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.22);font-size:9px;padding-left:2px}
 .demo-fab .sub{font-weight:500;opacity:.8;font-size:12px}
 .demo-fab.gone{display:none}
