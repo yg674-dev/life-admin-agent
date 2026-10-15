@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J0 · Onboarding and verification</title>
+<style>
+  html, body { margin: 0; background: #f4f6fa;
+    background-image: radial-gradient(#d9dee7 1px, transparent 1px); background-size: 14px 14px; }
+  .canvas { width: 2050px; margin: 24px auto; background: #fff; border: 1px solid #dbe2ea;
+    border-radius: 10px; box-shadow: 0 2px 10px rgba(16, 24, 40, .06); }
+  svg { display: block; font-family: Inter, "PingFang SC", "Helvetica Neue", Arial, sans-serif; }
+  .h1 { font-size: 22px; font-weight: 700; fill: #1f2933; }
+  .h2 { font-size: 13.5px; fill: #5b6675; }
+  .legend { font-size: 12px; fill: #5b6675; }
+  .lane { font-size: 13px; font-weight: 700; fill: #3e4c5e; text-anchor: middle; }
+  .shape { stroke-width: 1.8; filter: drop-shadow(0 1px 2px rgba(16, 24, 40, .10)); }
+  .title { font-size: 14px; font-weight: 700; fill: #1f2933; text-anchor: middle; }
+  .title.sm { font-size: 13px; }
+  .sub { font-size: 12px; fill: #4a5563; text-anchor: middle; }
+  .elabel { font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+  .lblbg { fill: #fff; opacity: .92; }
+  .note { font-size: 13px; fill: #3e4c5e; }
+  .phase { fill: #eef2f7; stroke: #d5dce6; }
+  .phasetxt { font-size: 12.5px; font-weight: 700; fill: #3e4c5e; text-anchor: middle; }
+  .phaseline { stroke: #c5cedb; stroke-dasharray: 4 4; }
+</style></head>
+<body><div class="canvas">
+<svg xmlns="http://www.w3.org/2000/svg" width="2050" height="907" viewBox="0 0 2050 907">
+<defs><marker id="arrow-user" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6c8ebf"/></marker><marker id="arrow-agent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f9da6"/></marker><marker id="arrow-backend" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9673a6"/></marker><marker id="arrow-decide" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8962e"/></marker><marker id="arrow-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5f9a4c"/></marker><marker id="arrow-fail" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b85450"/></marker><marker id="arrow-note" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a94a3"/></marker></defs>
+<text class="h1" x="28" y="44">J0 · Onboarding and verification</text>
+<text class="h2" x="28" y="70">Verify once, choose how much the agent may do, and show something useful within five minutes.</text>
+<rect x="28" y="88" width="16" height="12" rx="3" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+<text class="legend" x="50" y="98">User</text>
+<rect x="96" y="88" width="16" height="12" rx="3" fill="#d9f0f2" stroke="#4f9da6" stroke-width="1.5"/>
+<text class="legend" x="118" y="98">Agent</text>
+<rect x="171" y="88" width="16" height="12" rx="3" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+<text class="legend" x="193" y="98">Decision / check</text>
+<rect x="323" y="88" width="16" height="12" rx="3" fill="#eee5f5" stroke="#9673a6" stroke-width="1.5"/>
+<text class="legend" x="345" y="98">Vault / records</text>
+<rect x="468" y="88" width="16" height="12" rx="3" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text class="legend" x="490" y="98">Done</text>
+<rect x="536" y="88" width="16" height="12" rx="3" fill="#fff7f6" stroke="#b85450" stroke-width="1.5"/>
+<text class="legend" x="558" y="98">Failure / fallback</text>
+<rect x="20" y="128" width="2010" height="130" fill="#ffffff" stroke="#e3e8ef"/>
+<rect x="20" y="128" width="150" height="130" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="198.0">User</text>
+<rect x="20" y="258" width="2010" height="130" fill="#f8fafc" stroke="#e3e8ef"/>
+<rect x="20" y="258" width="150" height="130" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="328.0">Errand app</text>
+<rect x="20" y="388" width="2010" height="130" fill="#ffffff" stroke="#e3e8ef"/>
+<rect x="20" y="388" width="150" height="130" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="458.0">Agent</text>
+<rect x="20" y="518" width="2010" height="130" fill="#f8fafc" stroke="#e3e8ef"/>
+<rect x="20" y="518" width="150" height="130" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="588.0">KYC vendor</text>
+<rect x="20" y="648" width="2010" height="130" fill="#ffffff" stroke="#e3e8ef"/>
+<rect x="20" y="648" width="150" height="130" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="718.0">Manual review</text>
+<polyline points="391.0,193.0 449.0,193.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<polyline points="535.0,224.0 535.0,552.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<polyline points="621.0,583.0 677.0,583.0" fill="none" stroke="#9673a6" stroke-width="2.2" marker-end="url(#arrow-backend)"/>
+<polyline points="765.0,529.0 765.0,193.0 909.0,193.0" fill="none" stroke="#5f9a4c" stroke-width="2.2" marker-end="url(#arrow-ok)"/>
+<rect x="817.8" y="171.0" width="38.4" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="837.0" y="183.0" fill="#5f9a4c">pass</text>
+<polyline points="765.0,637.0 765.0,682.0" fill="none" stroke="#b85450" stroke-width="2.2" marker-end="url(#arrow-fail)"/>
+<rect x="770.0" y="651.5" width="38.4" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="776.0" y="663.5" fill="#b85450" style="text-anchor:start">fail</text>
+<polyline points="679.0,713.0 535.0,713.0 535.0,614.0" fill="none" stroke="#b85450" stroke-width="2.2" marker-end="url(#arrow-fail)"/>
+<rect x="574.6" y="691.0" width="64.8" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="607.0" y="703.0" fill="#b85450">re-check</text>
+<polyline points="1081.0,193.0 1139.0,193.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<polyline points="1311.0,193.0 1340.0,193.0 1340.0,453.0 1369.0,453.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<rect x="1345.0" y="315.0" width="71.4" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1351.0" y="327.0" fill="#6c8ebf" style="text-anchor:start">read-only</text>
+<polyline points="1541.0,453.0 1570.0,453.0 1570.0,323.0 1599.0,323.0" fill="none" stroke="#4f9da6" stroke-width="2.2" marker-end="url(#arrow-agent)"/>
+<polyline points="1771.0,323.0 1800.0,323.0 1800.0,193.0 1829.0,193.0" fill="none" stroke="#5f9a4c" stroke-width="2.2" marker-end="url(#arrow-ok)"/>
+<rect class="shape" x="219.0" y="162.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="305.0" y="188.5">Lands from a hook</text>
+<text class="sub" x="305.0" y="205.5">move · tax · renewal</text>
+<rect class="shape" x="449.0" y="162.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="535.0" y="197.0">Sign up</text>
+<rect class="shape" x="449.0" y="552.0" width="172" height="62" rx="7" fill="#eee5f5" stroke="#9673a6"/>
+<text class="title" x="535.0" y="578.5">ID scan + liveness</text>
+<text class="sub" x="535.0" y="595.5">selfie check</text>
+<polygon class="shape" points="765.0,529.0 853.0,583.0 765.0,637.0 677.0,583.0" fill="#fff2cc" stroke="#d6b656"/>
+<text class="title sm" x="765.0" y="587.0">KYC passed?</text>
+<rect class="shape" x="679.0" y="682.0" width="172" height="62" rx="7" fill="#fff7f6" stroke="#b85450"/>
+<text class="title" x="765.0" y="708.5">Manual review</text>
+<text class="sub" x="765.0" y="725.5">or retry the scan</text>
+<rect class="shape" x="909.0" y="162.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="995.0" y="188.5">Choose permission tier</text>
+<text class="sub" x="995.0" y="205.5">default: Prepare and ask</text>
+<rect class="shape" x="1139.0" y="156.0" width="172" height="74" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="1225.0" y="180.0">Connect sources</text>
+<text class="sub" x="1225.0" y="197.0">email · bank · payroll</text>
+<text class="sub" x="1225.0" y="214.0">brokerage · IRS</text>
+<rect class="shape" x="1369.0" y="416.0" width="172" height="74" rx="7" fill="#d9f0f2" stroke="#4f9da6"/>
+<text class="title" x="1455.0" y="440.0">Build the life map</text>
+<text class="sub" x="1455.0" y="457.0">accounts · IDs</text>
+<text class="sub" x="1455.0" y="474.0">policies · dates</text>
+<rect class="shape" x="1599.0" y="292.0" width="172" height="62" rx="7" fill="#d5e8d4" stroke="#82b366"/>
+<text class="title" x="1685.0" y="318.5">First &quot;found for you&quot;</text>
+<text class="sub" x="1685.0" y="335.5">e.g. passport expiring</text>
+<rect class="shape" x="1829.0" y="162.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="1915.0" y="197.0">Pick a first job</text>
+<rect x="20" y="800" width="2010" height="83" rx="7" fill="#f5f5f5" stroke="#8a94a3" stroke-width="1.2"/>
+<text class="note" x="38" y="827">Aha moment: within 5 minutes the agent shows something the user didn&#x27;t know — a renewal coming up, a forgotten subscription, or last year&#x27;s refund.</text>
+<text class="note" x="38" y="846">Permission tiers: Notify only → Prepare and ask (default) → Act within limits, e.g. &quot;cancel subscriptions under $20 without asking&quot;. Filing, paying, and signing always ask.</text>
+<text class="note" x="38" y="865">No agent action of any kind runs until KYC has passed.</text>
+</svg>
+</div></body></html>

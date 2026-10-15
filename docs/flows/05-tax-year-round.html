@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J4 · Tax — a year-round copilot</title>
+<style>
+  html, body { margin: 0; background: #f4f6fa;
+    background-image: radial-gradient(#d9dee7 1px, transparent 1px); background-size: 14px 14px; }
+  .canvas { width: 2050px; margin: 24px auto; background: #fff; border: 1px solid #dbe2ea;
+    border-radius: 10px; box-shadow: 0 2px 10px rgba(16, 24, 40, .06); }
+  svg { display: block; font-family: Inter, "PingFang SC", "Helvetica Neue", Arial, sans-serif; }
+  .h1 { font-size: 22px; font-weight: 700; fill: #1f2933; }
+  .h2 { font-size: 13.5px; fill: #5b6675; }
+  .legend { font-size: 12px; fill: #5b6675; }
+  .lane { font-size: 13px; font-weight: 700; fill: #3e4c5e; text-anchor: middle; }
+  .shape { stroke-width: 1.8; filter: drop-shadow(0 1px 2px rgba(16, 24, 40, .10)); }
+  .title { font-size: 14px; font-weight: 700; fill: #1f2933; text-anchor: middle; }
+  .title.sm { font-size: 13px; }
+  .sub { font-size: 12px; fill: #4a5563; text-anchor: middle; }
+  .elabel { font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+  .lblbg { fill: #fff; opacity: .92; }
+  .note { font-size: 13px; fill: #3e4c5e; }
+  .phase { fill: #eef2f7; stroke: #d5dce6; }
+  .phasetxt { font-size: 12.5px; font-weight: 700; fill: #3e4c5e; text-anchor: middle; }
+  .phaseline { stroke: #c5cedb; stroke-dasharray: 4 4; }
+</style></head>
+<body><div class="canvas">
+<svg xmlns="http://www.w3.org/2000/svg" width="2050" height="681" viewBox="0 0 2050 681">
+<defs><marker id="arrow-user" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6c8ebf"/></marker><marker id="arrow-agent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f9da6"/></marker><marker id="arrow-backend" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9673a6"/></marker><marker id="arrow-decide" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8962e"/></marker><marker id="arrow-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5f9a4c"/></marker><marker id="arrow-fail" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b85450"/></marker><marker id="arrow-note" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a94a3"/></marker></defs>
+<text class="h1" x="28" y="44">J4 · Tax — a year-round copilot</text>
+<text class="h2" x="28" y="70">Most strategies that save money have to happen before December 31, so the journey runs all year.</text>
+<rect x="28" y="88" width="16" height="12" rx="3" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+<text class="legend" x="50" y="98">User</text>
+<rect x="96" y="88" width="16" height="12" rx="3" fill="#d9f0f2" stroke="#4f9da6" stroke-width="1.5"/>
+<text class="legend" x="118" y="98">Agent</text>
+<rect x="171" y="88" width="16" height="12" rx="3" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+<text class="legend" x="193" y="98">Decision / check</text>
+<rect x="323" y="88" width="16" height="12" rx="3" fill="#eee5f5" stroke="#9673a6" stroke-width="1.5"/>
+<text class="legend" x="345" y="98">Vault / records</text>
+<rect x="468" y="88" width="16" height="12" rx="3" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text class="legend" x="490" y="98">Done</text>
+<rect x="536" y="88" width="16" height="12" rx="3" fill="#fff7f6" stroke="#b85450" stroke-width="1.5"/>
+<text class="legend" x="558" y="98">Failure / fallback</text>
+<rect x="194" y="130" width="682" height="26" rx="5" class="phase"/>
+<text class="phasetxt" x="535.0" y="148">All year · Plan</text>
+<rect x="884" y="130" width="452" height="26" rx="5" class="phase"/>
+<text class="phasetxt" x="1110.0" y="148">Oct–Dec · Year-end</text>
+<line x1="880" y1="128" x2="880" y2="552" class="phaseline"/>
+<rect x="1344" y="130" width="222" height="26" rx="5" class="phase"/>
+<text class="phasetxt" x="1455.0" y="148">Jan–Apr · File</text>
+<line x1="1340" y1="128" x2="1340" y2="552" class="phaseline"/>
+<rect x="1574" y="130" width="452" height="26" rx="5" class="phase"/>
+<text class="phasetxt" x="1800.0" y="148">After filing</text>
+<line x1="1570" y1="128" x2="1570" y2="552" class="phaseline"/>
+<rect x="20" y="162" width="2010" height="130" fill="#ffffff" stroke="#e3e8ef"/>
+<rect x="20" y="162" width="150" height="130" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="232.0">User</text>
+<rect x="20" y="292" width="2010" height="130" fill="#f8fafc" stroke="#e3e8ef"/>
+<rect x="20" y="292" width="150" height="130" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="362.0">Agent</text>
+<rect x="20" y="422" width="2010" height="130" fill="#ffffff" stroke="#e3e8ef"/>
+<rect x="20" y="422" width="150" height="130" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="492.0">Other modules</text>
+<polyline points="391.0,487.0 420.0,487.0 420.0,357.0 449.0,357.0" fill="none" stroke="#9673a6" stroke-width="2.2" marker-end="url(#arrow-backend)"/>
+<polyline points="621.0,357.0 679.0,357.0" fill="none" stroke="#4f9da6" stroke-width="2.2" marker-end="url(#arrow-agent)"/>
+<polyline points="851.0,357.0 909.0,357.0" fill="none" stroke="#4f9da6" stroke-width="2.2" marker-end="url(#arrow-agent)"/>
+<polyline points="1081.0,357.0 1110.0,357.0 1110.0,227.0 1139.0,227.0" fill="none" stroke="#b8962e" stroke-width="2.2" marker-end="url(#arrow-decide)"/>
+<polyline points="1311.0,227.0 1340.0,227.0 1340.0,357.0 1369.0,357.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<polyline points="1541.0,357.0 1599.0,357.0" fill="none" stroke="#4f9da6" stroke-width="2.2" marker-end="url(#arrow-agent)"/>
+<polyline points="1771.0,357.0 1829.0,357.0" fill="none" stroke="#5f9a4c" stroke-width="2.2" marker-end="url(#arrow-ok)"/>
+<polyline points="1915.0,326.0 1915.0,176 535.0,176 535.0,326.0" fill="none" stroke="#9673a6" stroke-width="2.2" stroke-dasharray="7 5" marker-end="url(#arrow-backend)"/>
+<rect x="1920.0" y="243.0" width="71.4" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1926.0" y="255.0" fill="#9673a6" style="text-anchor:start">next year</text>
+<rect class="shape" x="219.0" y="450.0" width="172" height="74" rx="7" fill="#eee5f5" stroke="#9673a6"/>
+<text class="title" x="305.0" y="474.0">Life events</text>
+<text class="sub" x="305.0" y="491.0">Move · Claim · Renew</text>
+<text class="sub" x="305.0" y="508.0">payroll · brokerage</text>
+<rect class="shape" x="449.0" y="326.0" width="172" height="62" rx="7" fill="#d9f0f2" stroke="#4f9da6"/>
+<text class="title" x="535.0" y="352.5">Running tax picture</text>
+<text class="sub" x="535.0" y="369.5">payroll · bank · brokerage</text>
+<rect class="shape" x="679.0" y="326.0" width="172" height="62" rx="7" fill="#d9f0f2" stroke="#4f9da6"/>
+<text class="title" x="765.0" y="352.5">Projection</text>
+<text class="sub" x="765.0" y="369.5">updated monthly</text>
+<rect class="shape" x="909.0" y="326.0" width="172" height="62" rx="7" fill="#fff2cc" stroke="#d6b656"/>
+<text class="title" x="995.0" y="352.5">Year-end strategies</text>
+<text class="sub" x="995.0" y="369.5">$ effect + deadline</text>
+<rect class="shape" x="1139.0" y="196.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="1225.0" y="222.5">Accept a strategy</text>
+<text class="sub" x="1225.0" y="239.5">agent drafts the change</text>
+<rect class="shape" x="1369.0" y="326.0" width="172" height="62" rx="7" fill="#d9f0f2" stroke="#4f9da6"/>
+<text class="title" x="1455.0" y="352.5">File the return</text>
+<text class="sub" x="1455.0" y="369.5">see the filing flow</text>
+<rect class="shape" x="1599.0" y="326.0" width="172" height="62" rx="7" fill="#d5e8d4" stroke="#82b366"/>
+<text class="title" x="1685.0" y="361.0">Refund tracking</text>
+<rect class="shape" x="1829.0" y="326.0" width="172" height="62" rx="7" fill="#eee5f5" stroke="#9673a6"/>
+<text class="title" x="1915.0" y="352.5">Carry forward</text>
+<text class="sub" x="1915.0" y="369.5">into next year&#x27;s plan</text>
+<rect x="20" y="574" width="2010" height="83" rx="7" fill="#f5f5f5" stroke="#8a94a3" stroke-width="1.2"/>
+<text class="note" x="38" y="601">Life events arrive from Move (residency dates), Claim (HSA and medical records), Renew (open enrollment), payroll, bank, and brokerage.</text>
+<text class="note" x="38" y="620">Accepting a strategy only drafts the change; nothing moves money until that specific action is approved.</text>
+<text class="note" x="38" y="639">After filing, the agent also reads IRS letters, explains them, and drafts a reply for approval.</text>
+</svg>
+</div></body></html>

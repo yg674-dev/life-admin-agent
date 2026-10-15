@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J4 · Tax — filing</title>
+<style>
+  html, body { margin: 0; background: #f4f6fa;
+    background-image: radial-gradient(#d9dee7 1px, transparent 1px); background-size: 14px 14px; }
+  .canvas { width: 2280px; margin: 24px auto; background: #fff; border: 1px solid #dbe2ea;
+    border-radius: 10px; box-shadow: 0 2px 10px rgba(16, 24, 40, .06); }
+  svg { display: block; font-family: Inter, "PingFang SC", "Helvetica Neue", Arial, sans-serif; }
+  .h1 { font-size: 22px; font-weight: 700; fill: #1f2933; }
+  .h2 { font-size: 13.5px; fill: #5b6675; }
+  .legend { font-size: 12px; fill: #5b6675; }
+  .lane { font-size: 13px; font-weight: 700; fill: #3e4c5e; text-anchor: middle; }
+  .shape { stroke-width: 1.8; filter: drop-shadow(0 1px 2px rgba(16, 24, 40, .10)); }
+  .title { font-size: 14px; font-weight: 700; fill: #1f2933; text-anchor: middle; }
+  .title.sm { font-size: 13px; }
+  .sub { font-size: 12px; fill: #4a5563; text-anchor: middle; }
+  .elabel { font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+  .lblbg { fill: #fff; opacity: .92; }
+  .note { font-size: 13px; fill: #3e4c5e; }
+  .phase { fill: #eef2f7; stroke: #d5dce6; }
+  .phasetxt { font-size: 12.5px; font-weight: 700; fill: #3e4c5e; text-anchor: middle; }
+  .phaseline { stroke: #c5cedb; stroke-dasharray: 4 4; }
+</style></head>
+<body><div class="canvas">
+<svg xmlns="http://www.w3.org/2000/svg" width="2280" height="757" viewBox="0 0 2280 757">
+<defs><marker id="arrow-user" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6c8ebf"/></marker><marker id="arrow-agent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f9da6"/></marker><marker id="arrow-backend" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9673a6"/></marker><marker id="arrow-decide" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8962e"/></marker><marker id="arrow-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5f9a4c"/></marker><marker id="arrow-fail" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b85450"/></marker><marker id="arrow-note" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a94a3"/></marker></defs>
+<text class="h1" x="28" y="44">J4 · Tax — filing</text>
+<text class="h2" x="28" y="70">Free options first, prefill before asking, and a failed accuracy check blocks signing until it is fixed.</text>
+<rect x="28" y="88" width="16" height="12" rx="3" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+<text class="legend" x="50" y="98">User</text>
+<rect x="96" y="88" width="16" height="12" rx="3" fill="#d9f0f2" stroke="#4f9da6" stroke-width="1.5"/>
+<text class="legend" x="118" y="98">Agent</text>
+<rect x="171" y="88" width="16" height="12" rx="3" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+<text class="legend" x="193" y="98">Decision / check</text>
+<rect x="323" y="88" width="16" height="12" rx="3" fill="#eee5f5" stroke="#9673a6" stroke-width="1.5"/>
+<text class="legend" x="345" y="98">Vault / records</text>
+<rect x="468" y="88" width="16" height="12" rx="3" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text class="legend" x="490" y="98">Done</text>
+<rect x="536" y="88" width="16" height="12" rx="3" fill="#fff7f6" stroke="#b85450" stroke-width="1.5"/>
+<text class="legend" x="558" y="98">Failure / fallback</text>
+<rect x="20" y="128" width="2240" height="120" fill="#ffffff" stroke="#e3e8ef"/>
+<rect x="20" y="128" width="150" height="120" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="193.0">User</text>
+<rect x="20" y="248" width="2240" height="140" fill="#f8fafc" stroke="#e3e8ef"/>
+<rect x="20" y="248" width="150" height="140" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="323.0">Checks</text>
+<rect x="20" y="388" width="2240" height="120" fill="#ffffff" stroke="#e3e8ef"/>
+<rect x="20" y="388" width="150" height="120" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="453.0">Agent</text>
+<rect x="20" y="508" width="2240" height="120" fill="#f8fafc" stroke="#e3e8ef"/>
+<rect x="20" y="508" width="150" height="120" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="573.0">IRS &amp; partners</text>
+<polyline points="305.0,372.0 305.0,537.0" fill="none" stroke="#5f9a4c" stroke-width="2.2" marker-end="url(#arrow-ok)"/>
+<rect x="310.0" y="446.5" width="31.799999999999997" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="316.0" y="458.5" fill="#5f9a4c" style="text-anchor:start">yes</text>
+<polyline points="393.0,318.0 421.0,318.0 421.0,448.0 449.0,448.0" fill="none" stroke="#b8962e" stroke-width="2.2" marker-end="url(#arrow-decide)"/>
+<rect x="394.4" y="296.0" width="25.2" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="407.0" y="308.0" fill="#b8962e">no</text>
+<polyline points="621.0,448.0 679.0,448.0" fill="none" stroke="#4f9da6" stroke-width="2.2" marker-end="url(#arrow-agent)"/>
+<polyline points="851.0,448.0 880.0,448.0 880.0,188.0 909.0,188.0" fill="none" stroke="#4f9da6" stroke-width="2.2" marker-end="url(#arrow-agent)"/>
+<polyline points="1081.0,188.0 1139.0,188.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<polyline points="1225.0,219.0 1225.0,318.0 1367.0,318.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<polyline points="1455.0,372.0 1455.0,417.0" fill="none" stroke="#b85450" stroke-width="2.2" marker-end="url(#arrow-fail)"/>
+<rect x="1460.0" y="386.5" width="38.4" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1466.0" y="398.5" fill="#b85450" style="text-anchor:start">fail</text>
+<polyline points="1369.0,448.0 1336.0,448.0 1336.0,318.0 1367.0,318.0" fill="none" stroke="#b85450" stroke-width="2.2" marker-end="url(#arrow-fail)"/>
+<rect x="1341.0" y="375.0" width="51.599999999999994" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1347.0" y="387.0" fill="#b85450" style="text-anchor:start">re-run</text>
+<polyline points="1543.0,318.0 1597.0,318.0" fill="none" stroke="#5f9a4c" stroke-width="2.2" marker-end="url(#arrow-ok)"/>
+<rect x="1550.8" y="296.0" width="38.4" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1570.0" y="308.0" fill="#5f9a4c">pass</text>
+<polyline points="1685.0,264.0 1685.0,188.0 1829.0,188.0" fill="none" stroke="#b8962e" stroke-width="2.2" marker-end="url(#arrow-decide)"/>
+<rect x="1731.2" y="166.0" width="51.599999999999994" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1757.0" y="178.0" fill="#b8962e">simple</text>
+<polyline points="1685.0,372.0 1685.0,537.0" fill="none" stroke="#b8962e" stroke-width="2.2" marker-end="url(#arrow-decide)"/>
+<rect x="1690.0" y="446.5" width="58.199999999999996" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1696.0" y="458.5" fill="#b8962e" style="text-anchor:start">complex</text>
+<polyline points="1771.0,568.0 1885.0,568.0 1885.0,219.0" fill="none" stroke="#8a94a3" stroke-width="2.2" marker-end="url(#arrow-note)"/>
+<polyline points="2001.0,188.0 2030.0,188.0 2030.0,568.0 2059.0,568.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<polygon class="shape" points="305.0,264.0 393.0,318.0 305.0,372.0 217.0,318.0" fill="#fff2cc" stroke="#d6b656"/>
+<text class="title sm" x="305.0" y="314.0">Qualifies for</text>
+<text class="title sm" x="305.0" y="330.0">free filing?</text>
+<rect class="shape" x="219.0" y="537.0" width="172" height="62" rx="7" fill="#d5e8d4" stroke="#82b366"/>
+<text class="title" x="305.0" y="563.5">IRS Free File / VITA</text>
+<text class="sub" x="305.0" y="580.5">agent sends them there</text>
+<rect class="shape" x="449.0" y="417.0" width="172" height="62" rx="7" fill="#d9f0f2" stroke="#4f9da6"/>
+<text class="title" x="535.0" y="443.5">Collect documents</text>
+<text class="sub" x="535.0" y="460.5">with sources + flags</text>
+<rect class="shape" x="679.0" y="417.0" width="172" height="62" rx="7" fill="#d9f0f2" stroke="#4f9da6"/>
+<text class="title" x="765.0" y="443.5">Prefill from vault</text>
+<text class="sub" x="765.0" y="460.5">7 of 15 fields</text>
+<rect class="shape" x="909.0" y="157.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="995.0" y="183.5">Answer the gap</text>
+<text class="sub" x="995.0" y="200.5">2 answers → 8 fields</text>
+<rect class="shape" x="1139.0" y="157.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="1225.0" y="183.5">Confirm draft</text>
+<text class="sub" x="1225.0" y="200.5">locks this version</text>
+<polygon class="shape" points="1455.0,264.0 1543.0,318.0 1455.0,372.0 1367.0,318.0" fill="#fff2cc" stroke="#d6b656"/>
+<text class="title sm" x="1455.0" y="314.0">Accuracy</text>
+<text class="title sm" x="1455.0" y="330.0">checks</text>
+<rect class="shape" x="1369.0" y="417.0" width="172" height="62" rx="7" fill="#fff7f6" stroke="#b85450"/>
+<text class="title" x="1455.0" y="443.5">Fix with evidence</text>
+<text class="sub" x="1455.0" y="460.5">e.g. missing cost basis</text>
+<polygon class="shape" points="1685.0,264.0 1773.0,318.0 1685.0,372.0 1597.0,318.0" fill="#fff2cc" stroke="#d6b656"/>
+<text class="title sm" x="1685.0" y="314.0">Complex</text>
+<text class="title sm" x="1685.0" y="330.0">return?</text>
+<rect class="shape" x="1599.0" y="537.0" width="172" height="62" rx="7" fill="#f5f5f5" stroke="#8a94a3"/>
+<text class="title" x="1685.0" y="563.5">CPA / EA review</text>
+<text class="sub" x="1685.0" y="580.5">credentialed, on demand</text>
+<rect class="shape" x="1829.0" y="157.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="1915.0" y="183.5">User signs</text>
+<text class="sub" x="1915.0" y="200.5">with the KYC identity</text>
+<rect class="shape" x="2059.0" y="537.0" width="172" height="62" rx="7" fill="#d5e8d4" stroke="#82b366"/>
+<text class="title" x="2145.0" y="563.5">E-file</text>
+<text class="sub" x="2145.0" y="580.5">via authorized partner</text>
+<rect x="20" y="650" width="2240" height="83" rx="7" fill="#f5f5f5" stroke="#8a94a3" stroke-width="1.2"/>
+<text class="note" x="38" y="677">Prototype return: 7 of 15 fields pre-filled before the first question; 2 answers fill the other 8; the refund meter moves from owe $460 to a refund.</text>
+<text class="note" x="38" y="696">The cost-basis check fails on a 2009 stock sale; the agent finds the trade confirmation in email and asks to use it. Checks then pass 6/6.</text>
+<text class="note" x="38" y="715">Any edit after Confirm reopens the interview and invalidates the confirmation and the checks.</text>
+</svg>
+</div></body></html>

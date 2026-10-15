@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J1 · Move — change my address everywhere</title>
+<style>
+  html, body { margin: 0; background: #f4f6fa;
+    background-image: radial-gradient(#d9dee7 1px, transparent 1px); background-size: 14px 14px; }
+  .canvas { width: 2050px; margin: 24px auto; background: #fff; border: 1px solid #dbe2ea;
+    border-radius: 10px; box-shadow: 0 2px 10px rgba(16, 24, 40, .06); }
+  svg { display: block; font-family: Inter, "PingFang SC", "Helvetica Neue", Arial, sans-serif; }
+  .h1 { font-size: 22px; font-weight: 700; fill: #1f2933; }
+  .h2 { font-size: 13.5px; fill: #5b6675; }
+  .legend { font-size: 12px; fill: #5b6675; }
+  .lane { font-size: 13px; font-weight: 700; fill: #3e4c5e; text-anchor: middle; }
+  .shape { stroke-width: 1.8; filter: drop-shadow(0 1px 2px rgba(16, 24, 40, .10)); }
+  .title { font-size: 14px; font-weight: 700; fill: #1f2933; text-anchor: middle; }
+  .title.sm { font-size: 13px; }
+  .sub { font-size: 12px; fill: #4a5563; text-anchor: middle; }
+  .elabel { font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+  .lblbg { fill: #fff; opacity: .92; }
+  .note { font-size: 13px; fill: #3e4c5e; }
+  .phase { fill: #eef2f7; stroke: #d5dce6; }
+  .phasetxt { font-size: 12.5px; font-weight: 700; fill: #3e4c5e; text-anchor: middle; }
+  .phaseline { stroke: #c5cedb; stroke-dasharray: 4 4; }
+</style></head>
+<body><div class="canvas">
+<svg xmlns="http://www.w3.org/2000/svg" width="2050" height="947" viewBox="0 0 2050 947">
+<defs><marker id="arrow-user" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6c8ebf"/></marker><marker id="arrow-agent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f9da6"/></marker><marker id="arrow-backend" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9673a6"/></marker><marker id="arrow-decide" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8962e"/></marker><marker id="arrow-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5f9a4c"/></marker><marker id="arrow-fail" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b85450"/></marker><marker id="arrow-note" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a94a3"/></marker></defs>
+<text class="h1" x="28" y="44">J1 · Move — change my address everywhere</text>
+<text class="h2" x="28" y="70">One plan in four lanes, sorted by who can do each step; finished steps feed other modules.</text>
+<rect x="28" y="88" width="16" height="12" rx="3" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+<text class="legend" x="50" y="98">User</text>
+<rect x="96" y="88" width="16" height="12" rx="3" fill="#d9f0f2" stroke="#4f9da6" stroke-width="1.5"/>
+<text class="legend" x="118" y="98">Agent</text>
+<rect x="171" y="88" width="16" height="12" rx="3" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+<text class="legend" x="193" y="98">Decision / check</text>
+<rect x="323" y="88" width="16" height="12" rx="3" fill="#eee5f5" stroke="#9673a6" stroke-width="1.5"/>
+<text class="legend" x="345" y="98">Vault / records</text>
+<rect x="468" y="88" width="16" height="12" rx="3" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text class="legend" x="490" y="98">Done</text>
+<rect x="536" y="88" width="16" height="12" rx="3" fill="#fff7f6" stroke="#b85450" stroke-width="1.5"/>
+<text class="legend" x="558" y="98">Failure / fallback</text>
+<rect x="20" y="128" width="2010" height="110" fill="#ffffff" stroke="#e3e8ef"/>
+<rect x="20" y="128" width="150" height="110" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="188.0">User</text>
+<rect x="20" y="238" width="2010" height="130" fill="#f8fafc" stroke="#e3e8ef"/>
+<rect x="20" y="238" width="150" height="130" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="308.0">Agent</text>
+<rect x="20" y="368" width="2010" height="110" fill="#ffffff" stroke="#e3e8ef"/>
+<rect x="20" y="368" width="150" height="110" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="428.0">Needs signature</text>
+<rect x="20" y="478" width="2010" height="110" fill="#f8fafc" stroke="#e3e8ef"/>
+<rect x="20" y="478" width="150" height="110" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="538.0">In person</text>
+<rect x="20" y="588" width="2010" height="110" fill="#ffffff" stroke="#e3e8ef"/>
+<rect x="20" y="588" width="150" height="110" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="648.0">Optional offers</text>
+<rect x="20" y="698" width="2010" height="120" fill="#f8fafc" stroke="#e3e8ef"/>
+<rect x="20" y="698" width="150" height="120" fill="#eef2f7" stroke="#e3e8ef"/>
+<text class="lane" x="95.0" y="763.0">Other modules</text>
+<polyline points="391.0,183.0 420.0,183.0 420.0,303.0 449.0,303.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<polyline points="621.0,303.0 679.0,303.0" fill="none" stroke="#4f9da6" stroke-width="2.2" marker-end="url(#arrow-agent)"/>
+<polyline points="851.0,303.0 909.0,303.0" fill="none" stroke="#4f9da6" stroke-width="2.2" marker-end="url(#arrow-agent)"/>
+<rect x="857.5" y="281.0" width="45.0" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="880.0" y="293.0" fill="#4f9da6">agent</text>
+<polyline points="765.0,334.0 765.0,423.0 909.0,423.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<rect x="801.3" y="401.0" width="71.4" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="837.0" y="413.0" fill="#6c8ebf">signature</text>
+<polyline points="765.0,334.0 765.0,533.0 909.0,533.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<rect x="801.3" y="511.0" width="71.4" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="837.0" y="523.0" fill="#6c8ebf">in person</text>
+<polyline points="765.0,334.0 765.0,643.0 909.0,643.0" fill="none" stroke="#8a94a3" stroke-width="2.2" marker-end="url(#arrow-note)"/>
+<rect x="804.6" y="621.0" width="64.8" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="837.0" y="633.0" fill="#8a94a3">optional</text>
+<polyline points="1081.0,303.0 1139.0,303.0" fill="none" stroke="#4f9da6" stroke-width="2.2" marker-end="url(#arrow-agent)"/>
+<rect x="1087.5" y="281.0" width="45.0" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1110.0" y="293.0" fill="#4f9da6">1 tap</text>
+<polyline points="1081.0,423.0 1195.0,423.0 1195.0,334.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<polyline points="1081.0,533.0 1255.0,533.0 1255.0,334.0" fill="none" stroke="#6c8ebf" stroke-width="2.2" marker-end="url(#arrow-user)"/>
+<polyline points="1311.0,303.0 1455.0,303.0 1455.0,727.0" fill="none" stroke="#9673a6" stroke-width="2.2" marker-end="url(#arrow-backend)"/>
+<rect x="1460.0" y="507.0" width="64.8" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1466.0" y="519.0" fill="#9673a6" style="text-anchor:start">hand off</text>
+<polyline points="1311.0,303.0 1685.0,303.0 1685.0,727.0" fill="none" stroke="#9673a6" stroke-width="2.2" marker-end="url(#arrow-backend)"/>
+<rect x="1690.0" y="507.0" width="64.8" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1696.0" y="519.0" fill="#9673a6" style="text-anchor:start">hand off</text>
+<polyline points="1311.0,303.0 1915.0,303.0 1915.0,727.0" fill="none" stroke="#9673a6" stroke-width="2.2" marker-end="url(#arrow-backend)"/>
+<rect x="1920.0" y="507.0" width="64.8" height="17" rx="4" class="lblbg"/>
+<text class="elabel" x="1926.0" y="519.0" fill="#9673a6" style="text-anchor:start">hand off</text>
+<rect class="shape" x="219.0" y="152.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="305.0" y="178.5">&quot;I&#x27;m moving&quot;</text>
+<text class="sub" x="305.0" y="195.5">new address + date</text>
+<rect class="shape" x="449.0" y="272.0" width="172" height="62" rx="7" fill="#d9f0f2" stroke="#4f9da6"/>
+<text class="title" x="535.0" y="298.5">Find old addresses</text>
+<text class="sub" x="535.0" y="315.5">scan email + bank</text>
+<rect class="shape" x="679.0" y="272.0" width="172" height="62" rx="7" fill="#d9f0f2" stroke="#4f9da6"/>
+<text class="title" x="765.0" y="307.0">Plan in four lanes</text>
+<rect class="shape" x="909.0" y="266.0" width="172" height="74" rx="7" fill="#d9f0f2" stroke="#4f9da6"/>
+<text class="title" x="995.0" y="290.0">Agent updates directly</text>
+<text class="sub" x="995.0" y="307.0">bank · card · brokerage</text>
+<text class="sub" x="995.0" y="324.0">payroll · phone · subs</text>
+<rect class="shape" x="909.0" y="392.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="995.0" y="418.5">Pre-filled e-sign</text>
+<text class="sub" x="995.0" y="435.5">USPS · voter reg · insurance</text>
+<rect class="shape" x="909.0" y="502.0" width="172" height="62" rx="7" fill="#dae8fc" stroke="#6c8ebf"/>
+<text class="title" x="995.0" y="528.5">Do it in person</text>
+<text class="sub" x="995.0" y="545.5">license · vehicle reg</text>
+<rect class="shape" x="909.0" y="612.0" width="172" height="62" rx="7" fill="#f5f5f5" stroke="#8a94a3"/>
+<text class="title" x="995.0" y="638.5">Internet · utilities</text>
+<text class="sub" x="995.0" y="655.5">labeled sponsored</text>
+<rect class="shape" x="1139.0" y="272.0" width="172" height="62" rx="7" fill="#d5e8d4" stroke="#82b366"/>
+<text class="title" x="1225.0" y="298.5">Tracker until done</text>
+<text class="sub" x="1225.0" y="315.5">receipts per account</text>
+<rect class="shape" x="1369.0" y="727.0" width="172" height="62" rx="7" fill="#eee5f5" stroke="#9673a6"/>
+<text class="title" x="1455.0" y="753.5">Tax</text>
+<text class="sub" x="1455.0" y="770.5">part-year residency</text>
+<rect class="shape" x="1599.0" y="727.0" width="172" height="62" rx="7" fill="#eee5f5" stroke="#9673a6"/>
+<text class="title" x="1685.0" y="753.5">Renew</text>
+<text class="sub" x="1685.0" y="770.5">replace, don&#x27;t renew</text>
+<rect class="shape" x="1829.0" y="727.0" width="172" height="62" rx="7" fill="#eee5f5" stroke="#9673a6"/>
+<text class="title" x="1915.0" y="753.5">Payroll</text>
+<text class="sub" x="1915.0" y="770.5">state withholding</text>
+<rect x="20" y="840" width="2010" height="83" rx="7" fill="#f5f5f5" stroke="#8a94a3" stroke-width="1.2"/>
+<text class="note" x="38" y="867">Prototype: 15 accounts with the old address → 7 agent updates, 4 need a signature, 2 in person, 2 optional offers.</text>
+<text class="note" x="38" y="886">Sponsored offers live in their own lane and never appear inside a required step.</text>
+<text class="note" x="38" y="905">Edge cases: moving to another state (part-year resident returns), moving abroad, temporary moves, two people moving together. Success: % of accounts updated within 14 days.</text>
+</svg>
+</div></body></html>

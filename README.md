@@ -123,43 +123,24 @@ own records.
 
 Five journeys, one engine. **Onboarding** happens once. **Move, Renew, and Claim** can be entered
 on their own or triggered by another module. **Tax** runs all year and receives events from all of
-them. Every journey runs the same loop:
+them.
 
-```mermaid
-flowchart LR
-  T["Trigger<br/>life event · deadline · new doc"] --> C["Agent reads context<br/>vault + account map"]
-  C --> P["Builds a plan<br/>steps + deadlines"]
-  P --> S{"Who can do<br/>each step?"}
-  S -->|"API / form fill"| A["Agent executes"]
-  S -->|"needs signature"| E["Pre-filled e-sign<br/>user approves"]
-  S -->|"in person"| U["Guided task<br/>for the user"]
-  S -->|"automation fails"| H["Human operator<br/>finishes it"]
-  A --> R["Tracker + receipts<br/>saved to vault"]
-  E --> R
-  U --> R
-  H --> R
-  R --> L["Updates account map<br/>+ tax file"]
-  L -.-> T
-```
+Each chart is a swimlane: one lane per actor, so you can read who does each step. Colors are
+consistent across charts: blue = user, teal = agent, yellow = decision or check, purple =
+vault / records, green = done, red = failure or fallback. Dashed lines loop back. Click any chart for
+the full-size version.
 
-The principle the diagram encodes: **the agent does everything up to the commitment, and the user
+### The loop every journey runs
+
+[![Every journey runs one loop: trigger, read context, plan, route each step by who can do it, then receipts to the vault](docs/flows/00-core-loop.png)](https://yg674-dev.github.io/life-admin-agent/docs/flows/00-core-loop.html)
+
+The principle the chart encodes: **the agent does everything up to the commitment, and the user
 makes the commitment.** Steps are sorted by who can do them, not listed flat, so the user sees at a
 glance what is already handled and what needs them.
 
 ### J0 · Onboarding and verification
 
-```mermaid
-flowchart LR
-  A["Lands from a hook<br/>move · tax · renewal"] --> B["Sign up"]
-  B --> C["KYC: ID scan<br/>+ selfie liveness"]
-  C -->|pass| D["Choose permission tier"]
-  C -->|fail| C2["Manual review<br/>or retry"]
-  C2 --> D
-  D --> E["Connect sources<br/>email · bank · payroll · IRS"]
-  E --> F["Agent builds life map<br/>accounts · IDs · policies · dates"]
-  F --> G["First 'found for you'<br/>e.g. passport expiring"]
-  G --> H["Pick first job"]
-```
+[![J0 onboarding: hook, sign up, KYC with a manual-review fallback, permission tier, connect sources, life map, first found-for-you](docs/flows/01-onboarding.png)](https://yg674-dev.github.io/life-admin-agent/docs/flows/01-onboarding.html)
 
 - **Aha moment:** within 5 minutes the agent shows something the user didn't know — a renewal
   coming up, a forgotten subscription, or last year's refund they could have increased.
@@ -168,21 +149,7 @@ flowchart LR
 
 ### J1 · Move — change my address everywhere
 
-```mermaid
-flowchart LR
-  A["'I'm moving'<br/>new address + date"] --> B["Scan email + bank for<br/>accounts with old address"]
-  B --> C["Plan in four lanes"]
-  C --> D1["Agent: bank, card, brokerage,<br/>payroll, phone, shopping, subs"]
-  C --> D2["E-sign: USPS forwarding,<br/>voter reg, insurance"]
-  C --> D3["In person: license,<br/>vehicle registration"]
-  C --> D4["Offers: internet,<br/>utilities · sponsored"]
-  D1 --> E["Tracker until done"]
-  D2 --> E
-  D3 --> E
-  E --> F["→ Tax: part-year residency"]
-  E --> G["→ Renew: replace, don't renew"]
-  E --> J["→ Payroll: state withholding"]
-```
+[![J1 Move: find old-address accounts, plan in four lanes by who acts, track until done, hand off to Tax, Renew, and Payroll](docs/flows/02-move.png)](https://yg674-dev.github.io/life-admin-agent/docs/flows/02-move.html)
 
 - **Edge cases:** moving to another state (part-year resident returns), moving abroad, temporary
   moves, two people moving together.
@@ -190,19 +157,7 @@ flowchart LR
 
 ### J2 · Renew — never miss an expiry
 
-```mermaid
-flowchart LR
-  A["Vault scan: passport, license,<br/>registration, insurance, enrollment"] --> B["Expiry calendar<br/>per-document lead time"]
-  B --> C{"Inside lead time?"}
-  C -->|no| B
-  C -->|yes| D["Agent prepares renewal<br/>pre-filled form + checks"]
-  D --> E{"Submittable online?"}
-  E -->|yes| F["User approves → agent submits"]
-  E -->|no| G["Printable packet<br/>or booked appointment"]
-  D --> I["Insurance: compare quotes<br/>on the same coverage"]
-  F --> H["New doc saved to vault"]
-  G --> H
-```
+[![J2 Renew: vault scan, expiry calendar, lead-time check, prepare renewal, submit online after approval or produce a packet](docs/flows/03-renew.png)](https://yg674-dev.github.io/life-admin-agent/docs/flows/03-renew.html)
 
 - **Lead times:** passport about 6 months (many countries require 6 months' validity), visa by
   type, insurance 30 days so there is time to shop around.
@@ -210,72 +165,31 @@ flowchart LR
 
 ### J3 · Claim — get my money back
 
-```mermaid
-flowchart LR
-  A["Trigger: cancelled flight,<br/>FSA receipt, surprise bill"] --> B["Check eligibility<br/>terms + deadline"]
-  B --> C["Gather evidence<br/>emails, receipts, statements"]
-  C --> D["Agent form fill<br/>asks the deciding question"]
-  D --> E["User confirms + signs"]
-  E --> F["Agent files + follows up"]
-  F --> G{"Outcome"}
-  G -->|paid| H["Logged → tax file"]
-  G -->|denied| I["Drafts appeal"]
-  I --> E
-```
+[![J3 Claim: eligibility, evidence, one deciding question, user signs, agent files; denied claims loop back through an appeal](docs/flows/04-claim.png)](https://yg674-dev.github.io/life-admin-agent/docs/flows/04-claim.html)
 
 - **Revenue:** a share of what's recovered, or included in the subscription.
 
 ### J4 · Tax — a year-round copilot
 
-```mermaid
-flowchart TB
-  subgraph Y["All year · Plan"]
-    direction LR
-    Y1["Running tax picture<br/>payroll · bank · brokerage"] --> Y2["Life events from<br/>other modules"]
-    Y2 --> Y3["Projection updated monthly"]
-  end
-  subgraph Q["Oct–Dec · Year-end"]
-    direction LR
-    Q1["Strategies with $ + deadline"] --> Q2["User accepts → agent<br/>drafts the change"]
-  end
-  subgraph F["Jan–Apr · File"]
-    direction LR
-    F0["Free File / VITA check"] --> F1["Docs auto-collected"]
-    F1 --> F2["Prefill, then interview<br/>only for the gap"]
-    F2 --> F3["Confirm draft"]
-    F3 --> F4{"Accuracy checks"}
-    F4 -->|fail| F5["Agent asks to fix<br/>with evidence"]
-    F5 --> F4
-    F4 -->|pass| F6{"Complexity"}
-    F6 -->|simple| F7["User signs"]
-    F6 -->|complex| F8["CPA / EA review"]
-    F8 --> F7
-    F7 --> F9["E-file via<br/>authorized partner"]
-  end
-  subgraph P["After filing"]
-    direction LR
-    P1["Refund tracking"] --> P2["IRS letter → agent<br/>explains + drafts reply"]
-    P2 --> P3["Carry forward<br/>to next year"]
-  end
-  Y --> Q --> F --> P
-  P3 -.-> Y1
-```
+[![J4 Tax year-round: life events feed a running tax picture, year-end strategies, filing, refund tracking, carry forward](docs/flows/05-tax-year-round.png)](https://yg674-dev.github.io/life-admin-agent/docs/flows/05-tax-year-round.html)
 
 Most strategies that save money have to happen **before** December 31 — the opposite of how
 filing software works today. That is why the journey runs all year.
 
-**The filing interview, step by step**
+**Filing, in detail**
 
-```mermaid
-flowchart LR
-  A["Who are you this year?<br/>prefilled from vault"] --> B["Income<br/>W-2, 1099-NEC/INT/DIV/B,<br/>gig platforms"]
-  B --> C["Life changes<br/>from Move / Renew / Claim"]
-  C --> D["Deductions + credits<br/>agent tests every one"]
-  D --> E["Choose strategy<br/>side-by-side scenarios"]
-  E --> F["Accuracy check<br/>vs IRS transcript"]
-  F --> G["Plain-English summary<br/>what changed vs last year"]
-  G --> H["Sign + file"]
-```
+[![J4 filing: free-filing check, prefill, gap interview, confirm, accuracy checks with a fix loop, CPA review when complex, sign, e-file](docs/flows/06-tax-filing.png)](https://yg674-dev.github.io/life-admin-agent/docs/flows/06-tax-filing.html)
+
+The interview behind *Answer the gap* runs in this order, and skips anything the vault already answers:
+
+1. **Who are you this year?** — prefilled from the vault
+2. **Income** — W-2, 1099-NEC / INT / DIV / B, gig platforms
+3. **Life changes** — from Move, Renew, and Claim
+4. **Deductions and credits** — the agent tests every one
+5. **Choose a strategy** — side-by-side scenarios
+6. **Accuracy check** — against the IRS transcript
+7. **Plain-English summary** — what changed vs. last year
+8. **Sign and file**
 
 - **Free path:** if the user qualifies for IRS Free File or VITA, the agent says so up front.
 - **Success:** minutes to file; questions asked per return; $ saved through strategies, shown and
@@ -296,17 +210,7 @@ file months before filing — the advantage of modules that feed each other.
 
 ### Ask Errand · always-on Q&A
 
-```mermaid
-flowchart LR
-  A["Question from any page"] --> B{"Answerable from<br/>user's records?"}
-  B -->|"no"| N["NO_RESULT<br/>say so · offer to connect"]
-  B -->|"yes, but ambiguous"| C["NEED_CLARIFICATION<br/>at most once"]
-  C --> D
-  B -->|"yes"| D{"Confidence"}
-  D -->|"high"| E["ANSWER_CARD<br/>source + confidence"]
-  D -->|"low"| L["LOW_CONFIDENCE<br/>range · names the gaps<br/>no navigation"]
-  E --> G["Open the page<br/>act there"]
-```
+[![Ask Errand: answer only from the user's records; NO_RESULT, one clarification, LOW_CONFIDENCE range, or an ANSWER_CARD that opens the page](docs/flows/07-ask-errand.png)](https://yg674-dev.github.io/life-admin-agent/docs/flows/07-ask-errand.html)
 
 ### Step by step
 
@@ -552,6 +456,7 @@ act, institution-specific forms with checks, and accountability for what is subm
 | [`index.html`](https://yg674-dev.github.io/life-admin-agent/) | The prototype on its own |
 | [`demo/build.py`](demo/build.py) | Generates `demo/index.html` by injecting the walkthrough layer into the untouched prototype |
 | [Journey map](https://life-admin-agent-map.vercel.app/) · [`docs/journey-map.html`](https://yg674-dev.github.io/life-admin-agent/docs/journey-map.html) | Journey map: all journeys, life events → tax, Intuit lessons, strategy table (the Vercel deployment and the in-repo copy are the same page) |
+| [`docs/flows/`](docs/flows/) | Swimlane user-journey charts used in §6: HTML source + PNG per journey. Rebuild with `python3 docs/flows/build.py` |
 | `docs/screens/` | Per-feature screenshots used above |
 
 ```bash
